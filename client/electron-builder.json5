@@ -1,0 +1,42 @@
+/**
+ * @see https://www.electron.build/configuration/configuration
+ */
+{
+  "appId": "xyz.starterpack.client",
+  "productName": "Starter Pack Client",
+  "asar": true,
+  "icon": "public/logo.png",
+  "artifactName": "${productName} - ${version}.${ext}",
+  "directories": {
+    "output": "release/"
+  },
+  "extraResources": [
+    "resources/**/*"
+  ],
+  "files": [
+    "dist-electron",
+    "dist"
+  ],
+  "mac": {
+    "target": "dmg",
+    "category": "public.app-category.games"
+  },
+  "win": {
+    "target": "nsis",
+  },
+  "linux": {
+    "target": [
+      "deb",
+      "rpm",
+      "snap",
+      "tar.gz"
+    ],
+    "category": "Game",
+    "icon": "public/261x256.png",
+  },
+  "nsis": {
+    "oneClick": true,
+    "allowToChangeInstallationDirectory": false,
+    "allowElevation": true
+  }
+}
