@@ -1,12 +1,13 @@
 {
-  "name": "won-launcher-next",
-  "version": "2.0.0",
+  "name": "starterpack-client",
+  "version": "0.0.1",
   "main": "dist-electron/main.js",
-  "description": "World Of Nations Launcher",
+  "description": "The native client application for StarterPack",
+  "homepage": "starterpack.xyz",
+  "license": "MIT",
   "author": {
-    "email": "contact.crooser@gmail.com",
-    "name": "Crooser",
-    "url": "https://github.com/Croos3r"
+    "email": "dorian.moy@epitech.eu",
+    "name": "Dorian Moy, Tom Bariteau-Peter & Pablo Levy"
   },
   "private": true,
   "debug": {
