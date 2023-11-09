@@ -12,6 +12,12 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "migration:create": "typeorm-ts-node-commonjs migration:create",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d src/utils/database.ts",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/utils/database.ts",
+    "migration:show": "typeorm-ts-node-commonjs migration:show -d src/utils/database.ts",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/utils/database.ts",
+    "schema:drop": "typeorm-ts-node-commonjs schema:drop -d src/utils/database.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -27,9 +33,11 @@
     "@nestjs/swagger": "^7.1.15",
     "@nestjs/typeorm": "^10.0.0",
     "nestjs-zod": "^3.0.0",
+    "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {
     "@automock/adapters.nestjs": "^1.4.0",
@@ -37,6 +45,7 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
