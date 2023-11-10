@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import Sidebar from "./components/Sidebar";
+import React from "react";
 
 // Define a type for your styles
 interface Styles {
