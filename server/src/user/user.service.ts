@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import {User, UserClass} from "./dto/user.model";
+import {User, UserClass, userSchema} from "./dto/user.model";
 import { InjectRepository } from '@nestjs/typeorm';
 import {Repository} from "typeorm";
 
-type UserIdentification = { }
+type UserIdentification = { id: string } | {email: string}
 
 @Injectable()
 export class UserService {
     constructor(
         // TODO: inject the correct User class
-        @InjectRepository(UserClass)
+        @InjectRepository(userSchema)
         private readonly userRepository: Repository<UserClass>
     ) {
     }
