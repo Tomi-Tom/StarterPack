@@ -8,6 +8,7 @@ type UserIdentification = { }
 @Injectable()
 export class UserService {
     constructor(
+        // TODO: inject the correct User class
         @InjectRepository(UserClass)
         private readonly userRepository: Repository<UserClass>
     ) {
