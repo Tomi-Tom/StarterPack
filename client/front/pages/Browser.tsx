@@ -5,24 +5,20 @@ interface BrowserProps {
 }
 
 const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
-    // Liste fictive de profils
     const initialProfileList = [
         { name: "Setup Photography", types: ["Creative"] },
         { name: "Setup Gaming", types: ["Gaming"] },
         { name: "Creative Designer", types: ["Creative", "Designer"] },
-        // Ajoutez d'autres profils fictifs au besoin
     ];
 
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [profileList, setProfileList] = useState(initialProfileList);
 
-    // Fonction de filtre en fonction de la recherche
     const filterProfiles = (search: string) => {
         const filteredList = initialProfileList.filter(profile => profile.name.toLowerCase().includes(search.toLowerCase()));
         setProfileList(filteredList);
     };
 
-    // Gérer le changement de la barre de recherche
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
         filterProfiles(event.target.value);
@@ -44,8 +40,6 @@ const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
                         onChange={handleSearchChange}
                         style={{ width: '100%', padding: '10px', boxSizing: 'border-box', marginBottom: '10px' }}
                     />
-
-                    {/* Liste filtrée des profils */}
                     {profileList.map((profile, index) => (
                         <div key={index} style={{ borderBottom: '1px solid #ccc', padding: '10px', display: 'flex', justifyContent: 'space-between' }}>
                             <div>

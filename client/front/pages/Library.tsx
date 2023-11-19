@@ -10,7 +10,6 @@ interface Profile {
     types: string[];
 }
 
-// Fonction pour attribuer une couleur à chaque type
 const getTypeColor = (type: string): string => {
     const colorMap: Record<string, string> = {
         Créatif: '#7FB3D5',
@@ -27,15 +26,11 @@ const getTypeColor = (type: string): string => {
         Divertissement: '#800080',
         Bricolage: '#FF69B4',
         Design: '#4682B4',
-        // Ajoutez d'autres couleurs pour les types supplémentaires
     };
-
-    // Retourne la couleur correspondante ou une couleur par défaut
     return colorMap[type] || '#ccc';
 };
 
 const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
-    // Données fictives pour la bibliothèque
     const profileList: Profile[] = [
         { id: 1, name: "Setup Photography", types: ["Créatif"] },
         { id: 2, name: "Setup Gaming", types: ["Gaming"] },
