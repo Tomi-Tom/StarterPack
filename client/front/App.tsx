@@ -1,10 +1,15 @@
+import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
-import React from "react";
+import Landing from "./pages/Landing";
+import Library from "./pages/Library";
+import Browser from "./pages/Browser";
+import Services from "./pages/Services";
+import User from "./pages/User";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-// Define a type for your styles
 interface Styles {
     container: React.CSSProperties;
-    input: React.CSSProperties;
 }
 
 const styles: Styles = {
@@ -16,10 +21,24 @@ const styles: Styles = {
     },
 };
 
+const componentsMap: Record<string, JSX.Element> = {
+    landing: <Landing  sidebarOpen/>,
+    library: <Library sidebarOpen/>,
+    browser: <Browser sidebarOpen/>,
+    services: <Services sidebarOpen/>,
+    user: <User sidebarOpen/>,
+    login: <Login sidebarOpen/>,
+    register: <Register sidebarOpen/>,
+};
+
 const App: React.FC = () => {
+    const [current, setCurrent] = useState("landing");
+    const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+
     return (
         <div style={styles.container}>
-            <Sidebar />
+            <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {React.cloneElement(componentsMap[current] as React.ReactElement, { sidebarOpen })}
         </div>
     );
 };

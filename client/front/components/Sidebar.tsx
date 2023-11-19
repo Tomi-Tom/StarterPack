@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface Styles {
     sidebar: React.CSSProperties;
@@ -80,18 +80,14 @@ const styles: Styles = {
     },
 };
 
-const Sidebar = () => {
-    const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-
+const Sidebar: React.FC<{ setCurrent: React.Dispatch<React.SetStateAction<string>>, sidebarOpen: boolean, setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>}> = ({ setCurrent, sidebarOpen, setSidebarOpen }) => {
     const toggleSidebar = () => {
-        setSidebarOpen(!sidebarOpen);
+        setSidebarOpen((prevSidebarOpen) => !prevSidebarOpen);
     };
 
     return (
         <div>
-            <div
-                style={{ ...styles.sidebar, width: sidebarOpen ? '250px' : '80px' }}
-            >
+            <div style={{ ...styles.sidebar, width: sidebarOpen ? '250px' : '80px' }}>
                 <div style={styles.sidebarContent}>
                     <button style={styles.foldButton} onClick={toggleSidebar}>{sidebarOpen ? "<" : ">"}</button>
                     <h1>
@@ -105,17 +101,15 @@ const Sidebar = () => {
                             </>
                         )}
                     </h1>
-                    <button style={styles.button}>{sidebarOpen ? "Browser" : "B"}</button>
-                    <button style={styles.button}>{sidebarOpen ? "Library" : "L"}</button>
-                    <button style={styles.button}>{sidebarOpen ? "Services" : "S"}</button>
-                    <button style={styles.bottomButton}>{sidebarOpen ? "User" : "U"}</button>
+                    <button style={styles.button} onClick={() => setCurrent("landing")}>{sidebarOpen ? "Home" : "H"}</button>
+                    <button style={styles.button} onClick={() => setCurrent("browser")}>{sidebarOpen ? "Browser" : "B"}</button>
+                    <button style={styles.button} onClick={() => setCurrent("library")}>{sidebarOpen ? "Library" : "L"}</button>
+                    <button style={styles.button} onClick={() => setCurrent("services")}>{sidebarOpen ? "Services" : "S"}</button>
+                    <button style={styles.bottomButton} onClick={() => setCurrent("user")}>{sidebarOpen ? "User" : "U"}</button>
                 </div>
             </div>
             <div style={styles.mainContent}>
-                <div
-                    onClick={toggleSidebar}
-                    style={styles.toggleButton}
-                >
+                <div onClick={toggleSidebar} style={styles.toggleButton}>
                     &#9654;
                 </div>
             </div>
@@ -124,3 +118,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
