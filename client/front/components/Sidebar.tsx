@@ -26,6 +26,7 @@ const styles: Styles = {
         zIndex: 1,
     },
     sidebarContent: {
+        transition: '0.5s',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -37,6 +38,7 @@ const styles: Styles = {
         boxSizing: 'border-box',
     },
     toggleButton: {
+        transition: '0.5s',
         position: 'fixed',
         left: '10px',
         top: '10px',
@@ -44,6 +46,7 @@ const styles: Styles = {
         fontSize: '1.5rem',
     },
     button: {
+        transition: '0.5s',
         width: '100%',
         padding: '10px',
         fontSize: '16px',
@@ -55,6 +58,7 @@ const styles: Styles = {
         cursor: 'pointer',
     },
     bottomButton: {
+        transition: '0.5s',
         width: '50%',
         position: 'absolute',
         bottom: 0,
@@ -68,6 +72,7 @@ const styles: Styles = {
         cursor: 'pointer',
     },
     foldButton: {
+        transition: '0.5s',
         padding: '10px',
         fontSize: '16px',
         marginBottom: '20px',
