@@ -27,19 +27,20 @@ const componentsMap: Record<string, JSX.Element> = {
     browser: <Browser sidebarOpen/>,
     services: <Services sidebarOpen/>,
     user: <User sidebarOpen/>,
-    login: <Login sidebarOpen/>,
-    register: <Register sidebarOpen/>,
 };
 
 const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
     return (
-        <div style={styles.container}>
-            <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-            {React.cloneElement(componentsMap[current] as React.ReactElement, { sidebarOpen })}
-        </div>
+        !isLoggedIn ?
+            <Login /> :
+            <div style={styles.container}>
+                <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {React.cloneElement(componentsMap[current] as React.ReactElement, { sidebarOpen })}
+            </div>
     );
 };
 
