@@ -6,7 +6,6 @@ import Browser from "./pages/Browser";
 import Services from "./pages/Services";
 import User from "./pages/User";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 
 interface Styles {
     container: React.CSSProperties;
@@ -33,6 +32,10 @@ const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+
+    if (localStorage.getItem("token")) {
+        setIsLoggedIn(true);
+    }
 
     return (
         !isLoggedIn ?

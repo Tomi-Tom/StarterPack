@@ -46,7 +46,6 @@ const styles: Styles = {
 };
 
 const User: React.FC<UserProps> = ({ sidebarOpen }) => {
-    // Informations fictives de l'utilisateur
     const userInformation = {
         name: "John Doe",
         title: "Frontend Developer",
