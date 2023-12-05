@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import {User, UserClass, userSchema} from "./dto/user.model";
+import {User} from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {Repository} from "typeorm";
 
-type UserIdentification = { id: string } | {email: string}
+type UserIdentification = { uuid: string } | {email: string}
 
 @Injectable()
 export class UserService {
     constructor(
-        // TODO: inject the correct User class
-        @InjectRepository(userSchema)
-        private readonly userRepository: Repository<UserClass>
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>
     ) {
     }
 
@@ -26,13 +25,12 @@ export class UserService {
             });
             return user;
         } catch (e) {
-            console.log(e);
             return null;
         }
     }
 
     async getUser(option: UserIdentification): Promise<User> {
-        const user = await this.userRepository.findOne(option);
+        const user = await this.userRepository.findOne( {where: option} );
         if (!user) {
             throw new Error("User not found");
         }

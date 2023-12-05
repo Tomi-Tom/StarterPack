@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import {z, ZodString} from 'zod';
 
 export const credentialsSchema = z.object({
-    mail: z.string().email().describe( "Email").transform((val) => val.toLowerCase()),
+    email: z.string().email().describe( "Email").transform((val) => val.toLowerCase()),
     password: z.string().min(8).max(255),
 });
 
@@ -37,5 +37,5 @@ export class LoginResponseDtoClass implements LoginResponseDto {
 
 export class RegisterResponseDtoClass implements RegisterResponseDto {
     id!: string;
-    token!: string;
+    token: ZodString["_output"];
 }

@@ -4,8 +4,7 @@ import {
     LoginDto,
     LoginResponseDto, LoginResponseDtoClass,
     RegisterDto,
-    RegisterResponseDto,
-    RegisterResponseDtoClass
+    RegisterResponseDto, RegisterResponseDtoClass,
 } from "./dto/credentialsDto";
 import {AuthService} from "./auth.service";
 
@@ -23,18 +22,18 @@ export class AuthController {
     })
 
     @Post('login')
-    async logIn( @Body() { mail, password}: LoginDto) : Promise<LoginResponseDto> {
-        return await this.authService.login( mail, password );
+    async logIn( @Body() { email, password}: LoginDto) : Promise<LoginResponseDto> {
+        return await this.authService.login( email, password );
     }
 
     @ApiOkResponse({
         description: 'user created',
-        type: RegisterResponseDtoClass
+        type: RegisterResponseDtoClass,
     })
 
     @Post('register')
-    async register(@Body() { mail, username, password}: RegisterDto) : Promise<RegisterResponseDto>
+    async register(@Body() { email, username, password}: RegisterDto) : Promise<RegisterResponseDto>
     {
-        return await this.authService.register(mail, username, password);
+        return await this.authService.register(email, username, password);
     }
 }
