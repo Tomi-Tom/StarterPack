@@ -8,14 +8,29 @@ import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
+import { ProfileController } from './profile/profile.controller';
+import { ProfileModule } from './profile/profile.module';
+import { ProfileApplicationRecipeService } from './profile_application_recipe/profile_application_recipe.service';
+import { ProfileApplicationRecipeModule } from './profile_application_recipe/profile_application_recipe.module';
+import { ApplicationController } from './application/application.controller';
+import { ApplicationService } from './application/application.service';
+import { ApplicationModule } from './application/application.module';
+import { ApplicationRecipeModule } from './application_recipe/application_recipe.module';
 
 @Module({
 	imports: [ ConfigModule.forRoot({
 		isGlobal: true,
 		expandVariables: true
-	}), TypeOrmModule.forRoot(DATA_SOURCE_CONFIGURATION), AuthModule, UserModule ],
-	controllers: [AuthController, UserController],
-	providers: [AuthService, UserService]
+	}), TypeOrmModule.forRoot(DATA_SOURCE_CONFIGURATION),
+		AuthModule,
+		UserModule,
+		ProfileModule,
+		ProfileApplicationRecipeModule,
+		ApplicationModule,
+		ApplicationRecipeModule
+	],
+	controllers: [ProfileController, ApplicationController],
+	providers: [ProfileApplicationRecipeService, ApplicationService]
 })
 export class AppModule {
 }

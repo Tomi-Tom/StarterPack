@@ -12,10 +12,10 @@ export class AuthService
         private readonly userService: UserService,
     ) {
     }
-    async login(mail: string, password: string): Promise<LoginResponseDto>
+    async login(email: string, password: string): Promise<LoginResponseDto>
     {
         try {
-            const user = await this.userService.getUser({mail});
+            const user = await this.userService.getUser({email});
             if (await verify(user.password_hash, password)) {
                 const token = this.generateToken(user.uuid);
                 return {
@@ -30,9 +30,9 @@ export class AuthService
         }
     }
 
-    async register(mail: string, username: string, password: string): Promise<RegisterResponseDto>
+    async register(email: string, username: string, password: string): Promise<RegisterResponseDto>
     {
-        const user = await this.userService.createUser(mail, username, await hash(password), false);
+        const user = await this.userService.createUser(email, username, await hash(password), false);
         if (user) {
             const token = this.generateToken(user.uuid);
             return { token: token, id: user.uuid };
