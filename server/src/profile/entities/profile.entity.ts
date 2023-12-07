@@ -1,11 +1,6 @@
 import {Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../../user/entities/user.entity";
-
-enum VerificationState {
-    PENDING = 'PENDING',
-    VERIFIED = 'VERIFIED',
-    REJECTED = 'REJECTED'
-}
+import {VerificationState} from "../../types/verification.state";
 
 @Entity()
 export class Profile {
