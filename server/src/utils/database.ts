@@ -1,6 +1,9 @@
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { getFromEnvironment } from "./env";
+import {User} from "../user/entities/user.entity";
+import UserSettings from "../user/entities/user-settings.entity";
+import {Profile} from "../profile/entities/profile.entity";
 
 const isDev = getFromEnvironment<string>("NODE_ENV") === "development";
 
@@ -14,7 +17,7 @@ export const DATA_SOURCE_CONFIGURATION: DataSourceOptions = {
 	database: getFromEnvironment<string>("DB_NAME"),
 	username: getFromEnvironment<string>("DB_USER"),
 	password: getFromEnvironment<string>("DB_PASSWORD"),
-	entities: [],
+	entities: [User, UserSettings],
 	migrations: [],
 	synchronize: isDev
 };
