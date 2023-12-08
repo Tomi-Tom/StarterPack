@@ -85,13 +85,19 @@ const styles: Styles = {
     },
 };
 
-const Sidebar: React.FC<{ setCurrent: React.Dispatch<React.SetStateAction<string>>, sidebarOpen: boolean, setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>}> = ({ setCurrent, sidebarOpen, setSidebarOpen }) => {
+interface SidebarProps {
+    setCurrent: React.Dispatch<React.SetStateAction<string>>;
+    sidebarOpen: boolean;
+    setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOpen }) => {
     const toggleSidebar = () => {
         setSidebarOpen((prevSidebarOpen) => !prevSidebarOpen);
     };
 
     return (
-        <div>
+        <>
             <div style={{ ...styles.sidebar, width: sidebarOpen ? '250px' : '80px' }}>
                 <div style={styles.sidebarContent}>
                     <button style={styles.foldButton} onClick={toggleSidebar}>{sidebarOpen ? "<" : ">"}</button>
@@ -118,9 +124,8 @@ const Sidebar: React.FC<{ setCurrent: React.Dispatch<React.SetStateAction<string
                     &#9654;
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
 export default Sidebar;
-
