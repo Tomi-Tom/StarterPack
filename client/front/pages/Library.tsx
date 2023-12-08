@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
 
 interface LibraryProps {
@@ -11,27 +11,9 @@ interface Profile {
     types: string[];
 }
 
-const getTypeColor = (type: string): string => {
-    const colorMap: Record<string, string> = {
-        Créatif: '#7FB3D5',
-        Gaming: '#FF7F50',
-        Tech: '#98FB98',
-        Lecture: '#9370DB',
-        Productivité: '#FFD700',
-        Audio: '#FF4500',
-        Video: '#008080',
-        Fitness: '#00FF00',
-        Cuisine: '#CD5C5C',
-        Aventure: '#20B2AA',
-        Outdoor: '#32CD32',
-        Divertissement: '#800080',
-        Bricolage: '#FF69B4',
-        Design: '#4682B4',
-    };
-    return colorMap[type] || '#ccc';
-};
-
 const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
+    const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+
     const profileList: Profile[] = [
         { id: 1, name: "Setup Photography", types: ["Créatif"] },
         { id: 2, name: "Setup Gaming", types: ["Gaming"] },
@@ -48,39 +30,91 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
         { id: 13, name: "Graphic Design Workspace", types: ["Créatif", "Design"] },
     ];
 
+    const handleProfileClick = (profile: Profile) => {
+        setSelectedProfile(profile);
+    };
+
+    const handleCloseProfile = () => {
+        setSelectedProfile(null);
+    };
+
     return (
         <div style={{ textAlign: 'center', marginTop: '50px', marginLeft: sidebarOpen ? '250px' : '80px', transition: '0.5s' }}>
             <h1>Library</h1>
             {sidebarOpen ? <p>Welcome to the Library! The sidebar is open.</p> : <p>Welcome to the Library! The sidebar is closed.</p>}
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '20px' }}>
-                <h3>Profile Collection:</h3>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                    {profileList.map(profile => (
-                        <button
-                            key={profile.id}
-                            style={{
-                                border: '1px solid #ccc',
-                                borderRadius: '8px',
-                                padding: '10px',
-                                margin: '10px',
-                                width: '200px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                position: 'relative',
-                            }}
-                        >
-                            <strong style={{ fontSize: '16px' }}>{profile.name}</strong>
-                            <div style={{ display: 'flex', marginTop: '5px' }}>
-                                {profile.types.map((type, index) => (
-                                    <LibraryTypeBadge key={index} type={type} />
-                                ))}
-                            </div>
-                        </button>
-                    ))}
-                </div>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                {profileList.map(profile => (
+                    <div
+                        key={profile.id}
+                        style={{
+                            border: '1px solid #ccc',
+                            borderRadius: '8px',
+                            padding: '15px',
+                            margin: '10px',
+                            width: '200px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            position: 'relative',
+                            cursor: 'pointer',
+                            transition: '0.3s',
+                            backgroundColor: selectedProfile && selectedProfile.id === profile.id ? '#eee' : 'white',
+                        }}
+                        onClick={() => handleProfileClick(profile)}
+                    >
+                        <strong style={{ fontSize: '18px', marginBottom: '10px' }}>{profile.name}</strong>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+                            {profile.types.map((type, index) => (
+                                <LibraryTypeBadge key={index} type={type}/>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </div>
+
+            {selectedProfile && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        bottom: selectedProfile ? '0' : '-100%',
+                        marginLeft: sidebarOpen ? '250px' : '80px',
+                        left: '0',
+                        width: sidebarOpen ? 'calc(100% - 290px)' : 'calc(100% - 120px)',
+                        height: '300px',
+                        backgroundColor: '#fff',
+                        padding: '20px',
+                        borderTopLeftRadius: '10px',
+                        borderTopRightRadius: '10px',
+                        transition: '0.5s',
+                        boxShadow: '0 -5px 5px -5px #333',
+                    }}
+                >
+                    <h2>{selectedProfile.name}</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus metus vel arcu pulvinar, a ultrices mi euismod. Quisque accumsan, orci ac sollicitudin elementum, sem justo cursus velit, et tristique libero leo sed nisi.</p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginBottom: '15px' }}>
+                        <LibraryTypeBadge type={selectedProfile.types[0]}/>
+                    </div>
+                    <button
+                        onClick={handleCloseProfile}
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            right: '20px',
+                            backgroundColor: '#333',
+                            color: 'white',
+                            padding: '10px 20px',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                            marginTop: '15px',
+                            border: 'none',
+                            fontSize: '16px',
+                        }}
+                    >
+                        X
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
