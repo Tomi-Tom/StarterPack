@@ -21,7 +21,6 @@ export class UserService {
                 uuid,
                 name,
                 settings: {
-                    user_uuid: uuid,
                     lang: "en",
                     theme: "light",
                     picture: "",
