@@ -1,4 +1,5 @@
 import React from "react";
+import LibraryTypeBadge from "../components/LibraryTypeBadge";
 
 interface LibraryProps {
     sidebarOpen: boolean;
@@ -45,7 +46,6 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
         { id: 11, name: "Home Theater System", types: ["Divertissement"] },
         { id: 12, name: "DIY Workshop", types: ["Bricolage", "Créatif"] },
         { id: 13, name: "Graphic Design Workspace", types: ["Créatif", "Design"] },
-        // Ajoutez d'autres profils avec des types différents
     ];
 
     return (
@@ -74,19 +74,7 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                             <strong style={{ fontSize: '16px' }}>{profile.name}</strong>
                             <div style={{ display: 'flex', marginTop: '5px' }}>
                                 {profile.types.map((type, index) => (
-                                    <span
-                                        key={index}
-                                        style={{
-                                            fontSize: '12px',
-                                            marginRight: '5px',
-                                            padding: '5px',
-                                            borderRadius: '5px',
-                                            background: getTypeColor(type),
-                                            color: '#fff',
-                                        }}
-                                    >
-                    {type}
-                  </span>
+                                    <LibraryTypeBadge key={index} type={type} />
                                 ))}
                             </div>
                         </button>
