@@ -1,9 +1,9 @@
 import {Body, Controller, Post} from '@nestjs/common';
-import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiOkResponse, ApiTags} from "@nestjs/swagger";
 import {
-    LoginDto,
+    LoginDto, LoginDtoClass,
     LoginResponseDto, LoginResponseDtoClass,
-    RegisterDto,
+    RegisterDto, RegisterDtoClass,
     RegisterResponseDto, RegisterResponseDtoClass,
 } from "./dto/credentialsDto";
 import {AuthService} from "./auth.service";
@@ -21,11 +21,18 @@ export class AuthController {
         type: LoginResponseDtoClass,
     })
 
+    @ApiBody({
+        type: LoginDtoClass,
+    })
+
     @Post('login')
     async logIn( @Body() { email, password}: LoginDto) : Promise<LoginResponseDto> {
         return await this.authService.login( email, password );
     }
 
+    @ApiBody({
+        type: RegisterDtoClass,
+    })
     @ApiOkResponse({
         description: 'user created',
         type: RegisterResponseDtoClass,

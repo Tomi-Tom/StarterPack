@@ -20,6 +20,7 @@ export type RegisterDto = z.infer<typeof registerSchema>;
 
 export const loginResponseSchema = z.object({
     token: z.string().describe( "JWT Token available for 1 day"),
+    id: z.string().uuid().describe( "UUID of the user"),
 });
 
 export type LoginResponseDto = z.infer<typeof loginResponseSchema>;
@@ -33,9 +34,21 @@ export type RegisterResponseDto = z.infer<typeof registerResponseSchema>;
 
 export class LoginResponseDtoClass implements LoginResponseDto {
     token!: string;
+    id!: string;
 }
 
 export class RegisterResponseDtoClass implements RegisterResponseDto {
     id!: string;
     token: ZodString["_output"];
+}
+
+export class LoginDtoClass implements LoginDto {
+    email!: string;
+    password!: string;
+}
+
+export class RegisterDtoClass implements RegisterDto {
+    email!: string;
+    password!: string;
+    username!: string;
 }

@@ -1,16 +1,16 @@
-import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import UserSettings from "./user-settings.entity";
 
 
 @Entity()
-export class User {
+export class User extends BaseEntity  {
     @PrimaryGeneratedColumn('uuid')
     uuid!: string;
 
     @Column({unique: true})
     name!: string;
 
-    @OneToOne(() => UserSettings, (settings) => settings.user, {cascade: true})
+    @OneToOne(() => UserSettings, (settings) => settings.user_uuid, {cascade: true})
     settings!: UserSettings;
 
     @Column({unique: true})

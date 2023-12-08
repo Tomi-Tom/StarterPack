@@ -19,7 +19,8 @@ export class AuthService
             if (await verify(user.password_hash, password)) {
                 const token = this.generateToken(user.uuid);
                 return {
-                    token
+                    token,
+                    id: user.uuid,
                 }
             }
             else {
