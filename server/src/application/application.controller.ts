@@ -14,7 +14,7 @@ export class ApplicationController {
     createApplication(
         @Body() createApplicationDto: CreateApplicationDto,
     ) {
-        return this.applicationService.createApplication();
+        return this.applicationService.createApplication(createApplicationDto);
     }
 
     @Get('getApplications')
