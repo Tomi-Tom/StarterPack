@@ -15,8 +15,8 @@ export class ApplicationRecipe extends BaseEntity{
     @Column()
     platform!: string;
 
-    @Column()
-    recipe!: string;
+    @Column({type: 'jsonb', nullable: true})
+    recipe!: string[];
 
     @Column()
     verification_state!: VerificationState;

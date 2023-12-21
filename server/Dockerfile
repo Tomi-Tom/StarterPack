@@ -8,6 +8,8 @@ RUN yarn --frozen-lockfile
 
 COPY . .
 
+RUN yarn install
+
 RUN yarn build
 
 FROM node:20.9.0-alpine3.17 AS runner
