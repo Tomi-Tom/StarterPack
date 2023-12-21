@@ -25,7 +25,7 @@ export class ApplicationRecipeService {
             return applicationRecipe;
         } catch (e) {
             console.log(e);
-            return null;
+            throw new Error("Error creating applicationRecipe");
         }
     }
 
@@ -39,21 +39,40 @@ export class ApplicationRecipeService {
 
     async getApplicationRecipes(): Promise<ApplicationRecipe[]> {
         const applicationRecipes = await this.ApplicationRecipeRepository.find();
+        if (!applicationRecipes) {
+            throw new Error("ApplicationRecipes not found");
+        }
         return applicationRecipes;
     }
 
     async updateApplicationRecipe(uuid: string, updateApplicationRecipeDto: CreateApplicationRecipeDto): Promise<ApplicationRecipe> {
         const applicationRecipe = await this.getApplicationRecipe(uuid);
-        const updatedApplicationRecipe = await this.ApplicationRecipeRepository.save({
-            ...applicationRecipe,
-            ...updateApplicationRecipeDto,
-        });
-        return updatedApplicationRecipe;
+        if (!applicationRecipe) {
+            throw new Error("ApplicationRecipe not found");
+        }
+        try {
+
+            const updatedApplicationRecipe = await this.ApplicationRecipeRepository.save({
+                ...applicationRecipe,
+                ...updateApplicationRecipeDto,
+            });
+            return updatedApplicationRecipe;
+        } catch (e) {
+            console.log(e);
+            throw new Error("Error updating applicationRecipe");
+        }
     }
 
-    async deleteApplicationRecipe(uuid: string): Promise<ApplicationRecipe> {
+    async deleteApplicationRecipe(uuid: string): Promise<void> {
         const applicationRecipe = await this.getApplicationRecipe(uuid);
-        const deletedApplicationRecipe = await this.ApplicationRecipeRepository.remove(applicationRecipe);
-        return deletedApplicationRecipe;
+        if (!applicationRecipe) {
+            throw new Error("ApplicationRecipe not found");
+        }
+        try {
+             await this.ApplicationRecipeRepository.remove(applicationRecipe);
+        } catch (e) {
+            console.log(e);
+            throw new Error("Error deleting applicationRecipe");
+        }
     }
 }
