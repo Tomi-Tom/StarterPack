@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import {string, z} from 'zod';
 
 export const createApplicationRecipeSchema = z.object({
     application_uuid: z.string().uuid().describe( "Application ID"),
-    recipe: z.string({}).describe( "Recipe (JSON)"),
+    recipe: z.array(z.string()).optional().describe( "Recipe (JSON)"),
     platform: z.string().min(3).max(255).describe( "Platform"),
 });
 
@@ -10,7 +10,7 @@ export type CreateApplicationRecipeDto = z.infer<typeof createApplicationRecipeS
 
 export class CreateApplicationRecipeDtoClass implements CreateApplicationRecipeDto {
     application_uuid!: string;
-    recipe!: string;
+    recipe!: string[];
     platform!: string;
 }
 
@@ -22,7 +22,7 @@ export type FindApplicationRecipeDto = z.infer<typeof findApplicationRecipeSchem
 
 export const updateApplicationRecipeSchema = z.object({
     uuid: z.string().uuid().describe( "ApplicationRecipe ID"),
-    recipe: z.object({}).optional().describe( "Recipe (JSON)"),
+    recipe: z.array(z.string()).optional().describe( "Recipe (JSON)"),
     platform: z.string().min(3).max(255).optional().describe( "Platform"),
 });
 
