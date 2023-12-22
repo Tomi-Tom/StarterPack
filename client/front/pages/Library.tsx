@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
+import {useTheme} from "styled-components";
 
 interface LibraryProps {
     sidebarOpen: boolean;
@@ -12,6 +13,7 @@ interface Profile {
 }
 
 const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
+    const theme = useTheme();
     const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 
     const profileList: Profile[] = [
@@ -39,7 +41,16 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px', marginLeft: sidebarOpen ? '250px' : '80px', transition: '0.5s' }}>
+        <div
+            style={{
+                marginLeft: sidebarOpen ? '250px' : '80px',
+                padding: '20px',
+                height: '100vh',
+                textAlign: 'center',
+                background: theme.background,
+                color: theme.text,
+            }}
+        >
             <h1>Library</h1>
             {sidebarOpen ? <p>Welcome to the Library! The sidebar is open.</p> : <p>Welcome to the Library! The sidebar is closed.</p>}
 
@@ -48,7 +59,6 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                     <div
                         key={profile.id}
                         style={{
-                            border: '1px solid #ccc',
                             borderRadius: '8px',
                             padding: '15px',
                             margin: '10px',
@@ -59,7 +69,7 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                             position: 'relative',
                             cursor: 'pointer',
                             transition: '0.3s',
-                            backgroundColor: selectedProfile && selectedProfile.id === profile.id ? '#eee' : 'white',
+                            backgroundColor: theme.card,
                         }}
                         onClick={() => handleProfileClick(profile)}
                     >

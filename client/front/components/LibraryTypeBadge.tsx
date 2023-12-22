@@ -13,7 +13,11 @@ const Badge = styled.span<{ color: string }>`
   color: #fff;
 `;
 
-const LibraryTypeBadge: React.FC<LibraryTypeBadgeProps> = ({ type }) => {
+interface LibraryTypeBadgeProps {
+    type: string;
+}
+
+const LibraryTypeBadge = ({ type }: LibraryTypeBadgeProps) => {
     const getTypeColor = (type: string): string => {
         const colorMap: Record<string, string> = {
             Créatif: '#7FB3D5',

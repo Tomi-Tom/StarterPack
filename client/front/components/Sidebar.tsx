@@ -1,89 +1,5 @@
 import React from "react";
-
-interface Styles {
-    sidebar: React.CSSProperties;
-    sidebarContent: React.CSSProperties;
-    mainContent: React.CSSProperties;
-    toggleButton: React.CSSProperties;
-    button: React.CSSProperties;
-    bottomButton: React.CSSProperties;
-    foldButton: React.CSSProperties;
-}
-
-const styles: Styles = {
-    sidebar: {
-        width: '250px',
-        height: '100%',
-        background: '#333',
-        color: '#fff',
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        overflowX: 'hidden',
-        transition: '0.5s',
-        padding: '20px',
-        boxSizing: 'border-box',
-        zIndex: 1,
-    },
-    sidebarContent: {
-        transition: '0.5s',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    mainContent: {
-        marginLeft: '250px',
-        transition: '0.5s',
-        padding: '20px',
-        boxSizing: 'border-box',
-    },
-    toggleButton: {
-        transition: '0.5s',
-        position: 'fixed',
-        left: '10px',
-        top: '10px',
-        cursor: 'pointer',
-        fontSize: '1.5rem',
-    },
-    button: {
-        transition: '0.5s',
-        width: '100%',
-        padding: '10px',
-        fontSize: '16px',
-        marginBottom: '20px',
-        border: 'none',
-        borderRadius: '5px',
-        background: '#555',
-        color: '#fff',
-        cursor: 'pointer',
-    },
-    bottomButton: {
-        transition: '0.5s',
-        width: '50%',
-        position: 'absolute',
-        bottom: 0,
-        padding: '10px',
-        fontSize: '16px',
-        marginBottom: '20px',
-        border: 'none',
-        borderRadius: '5px',
-        background: '#555',
-        color: '#fff',
-        cursor: 'pointer',
-    },
-    foldButton: {
-        transition: '0.5s',
-        padding: '10px',
-        fontSize: '16px',
-        marginBottom: '20px',
-        border: 'none',
-        borderRadius: '5px',
-        background: '#555',
-        color: '#fff',
-        cursor: 'pointer',
-        width: '40px',
-    },
-};
+import {useTheme} from "styled-components";
 
 interface SidebarProps {
     setCurrent: React.Dispatch<React.SetStateAction<string>>;
@@ -91,16 +7,69 @@ interface SidebarProps {
     setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOpen }) => {
+interface SidebarButtonProps {
+    onClick: () => void;
+    label: string;
+    sidebarOpen: boolean;
+}
+
+const SidebarButton = ({ onClick, label, sidebarOpen }: SidebarButtonProps) => {
+    const theme = useTheme();
+    return (
+        <button style={{
+            width: '100%',
+            padding: '10px',
+            fontSize: '16px',
+            marginBottom: '20px',
+            border: 'none',
+            borderRadius: '5px',
+            background: theme.card,
+            color: theme.text,
+            cursor: 'pointer',
+        }} onClick={onClick}>
+            {sidebarOpen ? label : label.charAt(0)}
+        </button>
+    );
+};
+
+const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOpen}) => {
+    const theme = useTheme();
     const toggleSidebar = () => {
         setSidebarOpen((prevSidebarOpen) => !prevSidebarOpen);
     };
 
     return (
         <>
-            <div style={{ ...styles.sidebar, width: sidebarOpen ? '250px' : '80px' }}>
-                <div style={styles.sidebarContent}>
-                    <button style={styles.foldButton} onClick={toggleSidebar}>{sidebarOpen ? "<" : ">"}</button>
+            <div style={{
+                width: sidebarOpen ? '250px' : '80px',
+                height: '100vh',
+                background: theme.backgroundSecondary,
+                color: '#fff',
+                position: 'fixed',
+                left: 0,
+                overflowX: 'hidden',
+                padding: '20px',
+                boxSizing: 'border-box',
+                zIndex: 1,
+            }}>
+                <div style={{
+                    transition: '0.5s',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}>
+                    <button style={{
+                        transition: '0.5s',
+                        padding: '10px',
+                        fontSize: '16px',
+                        marginBottom: '20px',
+                        border: 'none',
+                        borderRadius: '5px',
+                        background: theme.card,
+                        color: theme.text,
+                        cursor: 'pointer',
+                        width: '40px',
+                    }} onClick={toggleSidebar}>{sidebarOpen ? "<" : ">"}</button>
                     <h1>
                         {sidebarOpen ? (
                             <>
@@ -112,15 +81,40 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOp
                             </>
                         )}
                     </h1>
-                    <button style={styles.button} onClick={() => setCurrent("landing")}>{sidebarOpen ? "Home" : "H"}</button>
-                    <button style={styles.button} onClick={() => setCurrent("browser")}>{sidebarOpen ? "Browser" : "B"}</button>
-                    <button style={styles.button} onClick={() => setCurrent("library")}>{sidebarOpen ? "Library" : "L"}</button>
-                    <button style={styles.button} onClick={() => setCurrent("services")}>{sidebarOpen ? "Services" : "S"}</button>
-                    <button style={styles.bottomButton} onClick={() => setCurrent("user")}>{sidebarOpen ? "User" : "U"}</button>
+                    <SidebarButton onClick={() => setCurrent("landing")} label="Home" sidebarOpen={sidebarOpen} />
+                    <SidebarButton onClick={() => setCurrent("browser")} label="Browser" sidebarOpen={sidebarOpen} />
+                    <SidebarButton onClick={() => setCurrent("library")} label="Library" sidebarOpen={sidebarOpen} />
+                    <SidebarButton onClick={() => setCurrent("services")} label="Services" sidebarOpen={sidebarOpen} />
+                    <button style={{
+                        transition: '0.5s',
+                        width: '50%',
+                        position: 'absolute',
+                        bottom: 0,
+                        padding: '10px',
+                        fontSize: '16px',
+                        marginBottom: '20px',
+                        border: 'none',
+                        borderRadius: '5px',
+                        background: '#555',
+                        color: '#fff',
+                        cursor: 'pointer',
+                    }} onClick={() => setCurrent("user")}>{sidebarOpen ? "User" : "U"}</button>
                 </div>
             </div>
-            <div style={styles.mainContent}>
-                <div onClick={toggleSidebar} style={styles.toggleButton}>
+            <div style={{
+                marginLeft: sidebarOpen ? '250px' : '80px',
+                transition: '0.5s',
+                padding: '20px',
+                boxSizing: 'border-box',
+            }}>
+                <div onClick={toggleSidebar} style={{
+                    transition: '0.5s',
+                    position: 'fixed',
+                    left: '10px',
+                    top: '10px',
+                    cursor: 'pointer',
+                    fontSize: '1.5rem',
+                }}>
                     &#9654;
                 </div>
             </div>
