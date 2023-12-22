@@ -1,17 +1,23 @@
 import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from './theme';
+
+const theme = {
+    background: '#141214',
+    backgroundSecondary: '#444244',
+    accent: '#886644',
+    accentSecondary: '#553311',
+    card: '#595559',
+    text: '#eeeaee',
+};
 
 interface ThemeProviderProps {
     children: React.ReactNode;
-    theme: 'light' | 'dark';
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }) => {
-    const selectedTheme = theme === 'dark' ? darkTheme : lightTheme;
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
     return (
-        <StyledThemeProvider theme={selectedTheme}>
+        <StyledThemeProvider theme={theme}>
             {children}
         </StyledThemeProvider>
     );
