@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Sidebar from "./components/Sidebar";
 import Landing from "./pages/Landing";
 import Library from "./pages/Library";
@@ -21,28 +21,13 @@ const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-    const [theme, setTheme] = useState<"light" | "dark">("dark");
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
-            setTheme(savedTheme);
-        }
-    }, []);
-
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-    };
 
     if (localStorage.getItem("token")) {
         setIsLoggedIn(true);
     }
 
     return (
-        <ThemeProvider theme={theme}>
-            <div style={{ height: '100vh', overflow: 'hidden' }}>
+        <ThemeProvider>
                 {
                     isLoggedIn ?
                     <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> :
@@ -57,7 +42,6 @@ const App: React.FC = () => {
                         </div>
                     )}
                 </div>
-            </div>
         </ThemeProvider>
     );
 };

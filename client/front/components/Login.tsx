@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, {ChangeEvent, useState} from "react";
 import axios from "axios";
+import {useTheme} from "styled-components";
 
-const Login = ({ setRegister }) => {
+interface LoginProps {
+    setRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login = ({ setRegister }: LoginProps) => {
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleUsernameChange = (event) => {
+    const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
     };
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
 
@@ -35,45 +41,67 @@ const Login = ({ setRegister }) => {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px', transition: '0.5s', alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column' }}>
-            <h1>Login</h1>
-
-            <div style={{ maxWidth: '300px', margin: '0 auto' }}>
-                <label style={{ marginBottom: '8px', display: 'block' }}>Username</label>
+        <div style={{
+            textAlign: 'center',
+            transition: '0.5s',
+            alignItems: 'center',
+            justifyContent: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100vw',
+            height: '100vh',
+            background: theme.background,
+            color: theme.text,
+        }}>
+            <div style={{
+                width: '350px',
+                height: '400px',
+                margin: '0 auto',
+                padding: '20px',
+                borderRadius: '10px',
+                backgroundColor: theme.card,
+            }}>
+                <h1>
+                    Login
+                </h1>
+                <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
                 <input
                     type="text"
                     value={username}
                     onChange={handleUsernameChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box' }}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
                 />
 
-                <label style={{ marginBottom: '8px', display: 'block' }}>Password</label>
+                <label style={{marginBottom: '8px', display: 'block'}}>Password</label>
                 <input
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box' }}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
                 />
 
                 <button
                     onClick={handleLogin}
+                    disabled={loading}
                     style={{
                         width: '100%',
                         padding: '10px',
-                        backgroundColor: '#007BFF',
+                        backgroundColor: '#28a745',
                         color: '#fff',
                         border: 'none',
                         borderRadius: '5px',
                         cursor: 'pointer',
+                        opacity: loading ? 0.7 : 1,
                     }}
                 >
-                    Log in
+                    {loading ? 'Login...' : 'Login'}
                 </button>
             </div>
 
-            <p style={{ marginTop: '10px' }}>
+            <p style={{marginTop: '10px'}}>
                 Don't have an account?{" "}
-                <button onClick={() => setRegister(true)} style={{ border: 'none', color: '#007BFF', background: 'none', cursor: 'pointer' }}>
+                <button onClick={() => setRegister(true)}
+                        style={{border: 'none', color: '#007BFF', background: 'none', cursor: 'pointer'}}>
                     Register
                 </button>
             </p>

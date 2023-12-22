@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, {ChangeEvent, useState} from "react";
 import axios from "axios";
+import {useTheme} from "styled-components";
 
-const Register = ({ setRegister }) => {
+interface RegisterProps {
+    setRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Register = ({ setRegister }: RegisterProps) => {
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleUsernameChange = (event) => {
+    const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
     };
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
 
-    const handleConfirmPasswordChange = (event) => {
+    const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
         setConfirmPassword(event.target.value);
     };
+
 
     const handleRegister = async () => {
         setLoading(true);
@@ -41,36 +48,56 @@ const Register = ({ setRegister }) => {
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px', transition: '0.5s' }}>
-            <h1>Register</h1>
+        <div style={{
+            textAlign: 'center',
+            transition: '0.5s',
+            alignItems: 'center',
+            justifyContent: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100vw',
+            height: '100vh',
+            background: theme.background,
+            color: theme.text,
+        }}>
 
-            <div style={{ maxWidth: '300px', margin: '0 auto' }}>
-                <label style={{ marginBottom: '8px', display: 'block' }}>Username</label>
+
+            <div style={{
+                width: '350px',
+                height: '400px',
+                margin: '0 auto',
+                padding: '20px',
+                borderRadius: '10px',
+                backgroundColor: theme.card,
+            }}>
+                <h1>Register</h1>
+                <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
                 <input
                     type="text"
                     value={username}
                     onChange={handleUsernameChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box' }}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
                 />
 
-                <label style={{ marginBottom: '8px', display: 'block' }}>Password</label>
+                <label style={{marginBottom: '8px', display: 'block'}}>Password</label>
                 <input
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box' }}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
                 />
 
-                <label style={{ marginBottom: '8px', display: 'block' }}>Confirm Password</label>
+                <label style={{marginBottom: '8px', display: 'block'}}>Confirm Password</label>
                 <input
                     type="password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    style={{ width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box' }}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
                 />
 
                 <button
                     onClick={handleRegister}
+                    disabled={loading}
                     style={{
                         width: '100%',
                         padding: '10px',
@@ -79,15 +106,17 @@ const Register = ({ setRegister }) => {
                         border: 'none',
                         borderRadius: '5px',
                         cursor: 'pointer',
+                        opacity: loading ? 0.7 : 1,
                     }}
                 >
-                    Register
+                    {loading ? 'Registering...' : 'Register'}
                 </button>
             </div>
 
-            <p style={{ marginTop: '10px' }}>
+            <p style={{marginTop: '10px'}}>
                 Already have an account?{" "}
-                <button onClick={() => setRegister(false)} style={{ border: 'none', color: '#28a745', background: 'none', cursor: 'pointer' }}>
+                <button onClick={() => setRegister(false)}
+                        style={{border: 'none', color: '#28a745', background: 'none', cursor: 'pointer'}}>
                     Login
                 </button>
             </p>
