@@ -17,15 +17,16 @@ export class ApplicationService {
 
     async createApplication(createApplication: CreateApplicationDto): Promise<Application> {
         try {
-            const uuid = uuidv4();
-            const created_at = new Date();
+            const applicationToCreate = {
+                uuid: uuidv4(),
+                created_at: new Date(),
+                recipes: createApplication.recipes,
+                name: createApplication.name,
+                creator_uuid: createApplication.creator_uuid,
+                verification_state: VerificationState.PENDING,
+            }
             return await this.applicationRepository.save(
-                {
-                    uuid,
-                    verification_state: VerificationState.PENDING,
-                    created_at,
-                    createApplication,
-                }
+                applicationToCreate
             );
         } catch (e) {
             console.log(e);
@@ -49,19 +50,15 @@ export class ApplicationService {
         return application;
     }
 
-    async updateApplication(uuid: string, application: {
-        recipes: string[];
-        creator_uuid: string | null;
-        name: string
-    }): Promise<Application> {
+    async updateApplication(uuid: string, application: CreateApplicationDto
+     ): Promise<Application> {
         const applicationToUpdate = await this.getApplication(uuid);
-        if (applicationToUpdate instanceof Application) {
-            applicationToUpdate.recipes = application.recipes;
-            applicationToUpdate.creator_uuid = application.creator_uuid;
-            applicationToUpdate.name = application.name;
-        }
         try {
-            return await this.applicationRepository.save(applicationToUpdate);
+            const updatedAt = new Date();
+            return await this.applicationRepository.save({
+                ...applicationToUpdate,
+                ...application,
+            });
         } catch (e) {
             console.log(e);
             throw new Error("Error updating application");

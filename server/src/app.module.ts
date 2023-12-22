@@ -30,8 +30,8 @@ import {ProfileApplicationRecipeController} from "./profile_application_recipe/p
 		ApplicationModule,
 		ApplicationRecipeModule
 	],
-	controllers: [ProfileController, ApplicationController, AuthController, UserController],
-	providers: [ProfileApplicationRecipeService, ApplicationService]
+	controllers: [ProfileController, AuthController, UserController],
+	providers: []
 })
 export class AppModule {
 }

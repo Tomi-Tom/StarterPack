@@ -4,6 +4,7 @@ import Profile from "./entities/profile.entity";
 import {Repository} from "typeorm";
 import {ProfileDto} from "./dto/profile.dto";
 import {v4 as uuidv4} from 'uuid';
+import {VerificationState} from "../types/verification.state";
 
 @Injectable()
 export class ProfileService {
@@ -16,14 +17,16 @@ export class ProfileService {
 
     async createProfile(profile: ProfileDto): Promise<Profile> {
         try {
-            const uuid = uuidv4();
-            const created_at = new Date();
+            const profileToCreate = {
+                name: profile.name,
+                description: profile.description,
+                owner_id: profile.owner_id,
+                verification_state: VerificationState.VERIFIED,
+                uuid: uuidv4(),
+                created_at: new Date(),
+            }
             return await this.ProfileRepository.save(
-                {
-                    uuid,
-                    created_at,
-                    ...profile,
-                }
+                profileToCreate
             );
         } catch (e) {
             console.log(e);
@@ -50,11 +53,10 @@ export class ProfileService {
     async updateProfile(uuid: string, profile: ProfileDto): Promise<Profile> {
         const profileToUpdate = await this.getProfile(uuid);
         try {
-            const updatedAt = new Date();
-            return await this.ProfileRepository.save({
-                ...profileToUpdate,
-                ...profile,
-            });
+            profileToUpdate.name = profile.name;
+            profileToUpdate.description = profile.description;
+
+            return await this.ProfileRepository.save(profileToUpdate);
         } catch (e) {
             console.log(e);
             throw new Error("Error updating profile");

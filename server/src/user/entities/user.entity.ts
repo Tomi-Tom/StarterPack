@@ -1,5 +1,6 @@
-import {BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import UserSettings from "./user-settings.entity";
+import Profile from "../../profile/entities/profile.entity";
 
 
 @Entity()

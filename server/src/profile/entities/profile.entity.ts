@@ -21,4 +21,5 @@ export default class Profile {
 
     @Column({ type: 'timestamp'})
     created_at!: Date;
+
 }

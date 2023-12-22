@@ -32,9 +32,9 @@ export class ApplicationController {
     @Post('updateApplication')
     async updateApplication(
         @Query('uuid') uuid: string,
-        @Body() {name, creator_uuid, recipes}: CreateApplicationDto,
+        @Body() updateApplicationDto: CreateApplicationDto,
     ) {
-        return await this.applicationService.updateApplication(uuid, {name, creator_uuid, recipes});
+        return await this.applicationService.updateApplication(uuid, updateApplicationDto);
     }
 
     @Delete()
