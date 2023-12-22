@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
-import {useTheme} from "styled-components";
+import { useTheme } from "styled-components";
 
 interface LibraryProps {
     sidebarOpen: boolean;
@@ -15,6 +15,8 @@ interface Profile {
 const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
     const theme = useTheme();
     const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [filteredProfileList, setFilteredProfileList] = useState<Profile[]>([]);
 
     const mock: Profile[] = [
         { id: 1, name: "Setup Photography", types: ["Creatif"] },
@@ -55,43 +57,90 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
         setSelectedProfile(null);
     };
 
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const searchTerm = event.target.value;
+        setSearchTerm(searchTerm);
+        filterProfiles(searchTerm);
+    };
+
+    const filterProfiles = (search: string) => {
+        const filteredList = profileList.filter((profile) =>
+            profile.name.toLowerCase().includes(search.toLowerCase())
+        );
+        setFilteredProfileList(filteredList);
+    };
+
+    const renderProfileList = filteredProfileList.length
+        ? filteredProfileList
+        : profileList;
+
     return (
         <div
             style={{
-                marginLeft: sidebarOpen ? '250px' : '80px',
-                padding: '20px',
-                minHeight: '100vh',
-                height: '100%',
-                textAlign: 'center',
+                marginLeft: sidebarOpen ? "250px" : "80px",
+                padding: "20px",
+                minHeight: "100vh",
+                height: "100%",
+                textAlign: "center",
                 background: theme.background,
                 color: theme.text,
             }}
         >
             <h1>Library</h1>
 
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                {profileList.map(profile => (
+            <input
+                type="text"
+                placeholder="Search profiles..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    boxSizing: "border-box",
+                    marginBottom: "20px",
+                    borderRadius: "5px",
+                    background: theme.lightBackground,
+                }}
+            />
+
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    flexWrap: "wrap",
+                }}
+            >
+                {renderProfileList.map((profile) => (
                     <div
                         key={profile.id}
                         style={{
-                            borderRadius: '8px',
-                            padding: '15px',
-                            margin: '10px',
-                            width: '200px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            transition: '0.3s',
+                            borderRadius: "8px",
+                            padding: "15px",
+                            margin: "10px",
+                            width: "200px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            position: "relative",
+                            cursor: "pointer",
+                            transition: "0.3s",
                             backgroundColor: theme.card,
                         }}
                         onClick={() => handleProfileClick(profile)}
                     >
-                        <strong style={{ fontSize: '18px', marginBottom: '10px' }}>{profile.name}</strong>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px'}}>
+                        <strong style={{ fontSize: "18px", marginBottom: "10px" }}>
+                            {profile.name}
+                        </strong>
+                        <div
+                            style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: "5px",
+                            }}
+                        >
                             {profile.types.map((type, index) => (
-                                <LibraryTypeBadge key={index} type={type}/>
+                                <LibraryTypeBadge key={index} type={type} />
                             ))}
                         </div>
                     </div>
