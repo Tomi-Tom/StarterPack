@@ -5,7 +5,7 @@ import LibraryTypeBadge from "../components/LibraryTypeBadge";
 
 interface UserProps {
     sidebarOpen: boolean;
-    style?: React.CSSProperties; // Prop style pour le conteneur principal
+    style?: React.CSSProperties;
 }
 
 const User: React.FC<UserProps> = ({ sidebarOpen, style }) => {
