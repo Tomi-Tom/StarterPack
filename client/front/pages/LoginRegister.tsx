@@ -1,14 +1,6 @@
 import React from "react";
 import Login from "../components/Login";
-
-const Register = ({ setRegister }) => {
-    return (
-        <div style={{ textAlign: 'center', marginTop: '50px', transition: '0.5s' }}>
-            <h1>Register</h1>
-            <button onClick={() => setRegister(false)}>Login</button>
-        </div>
-    );
-};
+import Register from "../components/Register";
 
 const LoginRegister = () => {
     const [register, setRegister] = React.useState(false);
