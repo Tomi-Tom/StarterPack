@@ -16,6 +16,7 @@ import { ApplicationController } from './application/application.controller';
 import { ApplicationService } from './application/application.service';
 import { ApplicationModule } from './application/application.module';
 import { ApplicationRecipeModule } from './application_recipe/application_recipe.module';
+import {ProfileApplicationRecipeController} from "./profile_application_recipe/profile_application_recipe.controller";
 
 @Module({
 	imports: [ ConfigModule.forRoot({
@@ -29,7 +30,7 @@ import { ApplicationRecipeModule } from './application_recipe/application_recipe
 		ApplicationModule,
 		ApplicationRecipeModule
 	],
-	controllers: [ProfileController, ApplicationController],
+	controllers: [ProfileController, ApplicationController, AuthController, UserController],
 	providers: [ProfileApplicationRecipeService, ApplicationService]
 })
 export class AppModule {

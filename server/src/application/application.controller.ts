@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Post, Query} from '@nestjs/common';
 import {ApiTags} from "@nestjs/swagger";
 import {ApplicationService} from "./application.service";
 import {CreateApplicationDto} from "./dto/create.application.dto";
@@ -11,29 +11,36 @@ export class ApplicationController {
     ) {}
 
     @Post()
-    createApplication(
+    async createApplication(
         @Body() createApplicationDto: CreateApplicationDto,
-    ) {
-        return this.applicationService.createApplication(createApplicationDto);
+    ) : Promise<void> {
+        await this.applicationService.createApplication(createApplicationDto);
     }
 
     @Get('getApplications')
-    getApplications() {
-        return this.applicationService.getApplications();
+    async getApplications() {
+        return await this.applicationService.getApplications();
     }
 
     @Get('getApplication')
-    getApplication() {
-        return this.applicationService.getApplication();
+    async getApplication(
+        @Query('uuid') uuid: string,
+    ) {
+        return await this.applicationService.getApplication(uuid);
     }
 
     @Post('updateApplication')
-    updateApplication() {
-        return this.applicationService.updateApplication();
+    async updateApplication(
+        @Query('uuid') uuid: string,
+        @Body() {name, creator_uuid, recipes}: CreateApplicationDto,
+    ) {
+        return await this.applicationService.updateApplication(uuid, {name, creator_uuid, recipes});
     }
 
     @Delete()
-    deleteApplication() {
-        return this.applicationService.deleteApplication();
+    async deleteApplication(
+        @Query('uuid') uuid: string,
+    ) {
+        return await this.applicationService.deleteApplication(uuid);
     }
 }
