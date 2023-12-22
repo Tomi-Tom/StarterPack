@@ -1,9 +1,9 @@
-import {Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../../user/entities/user.entity";
 import {VerificationState} from "../../types/verification.state";
 
 @Entity()
-export class Profile {
+export class Profile extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     uuid!: string;
 

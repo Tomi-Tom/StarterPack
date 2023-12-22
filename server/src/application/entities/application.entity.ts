@@ -1,20 +1,20 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {VerificationState} from "../../types/verification.state";
 import {ApplicationRecipe} from "../../application_recipe/entities/application_recipe.entity";
 
 @Entity()
-export class Application {
+export class Application extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     uuid!: string;
 
-    @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
-    recipes!: ApplicationRecipe[];
-
-    @Column()
-    name!: string;
 
     @Column({nullable: true})
-    creator_uuid!: string;
+    creator_uuid!: string | null;
+
+    @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
+    recipes!: ApplicationRecipe[];
+    @Column()
+    name!: string;
 
     @Column()
     verification_state!: VerificationState;
