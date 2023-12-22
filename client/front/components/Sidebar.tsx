@@ -82,7 +82,6 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOp
                         )}
                     </h1>
                     <SidebarButton onClick={() => setCurrent("landing")} label="Home" sidebarOpen={sidebarOpen} />
-                    <SidebarButton onClick={() => setCurrent("browser")} label="Browser" sidebarOpen={sidebarOpen} />
                     <SidebarButton onClick={() => setCurrent("library")} label="Library" sidebarOpen={sidebarOpen} />
                     <SidebarButton onClick={() => setCurrent("services")} label="Services" sidebarOpen={sidebarOpen} />
                     <button style={{

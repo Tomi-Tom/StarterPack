@@ -52,7 +52,6 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
             }}
         >
             <h1>Library</h1>
-            {sidebarOpen ? <p>Welcome to the Library! The sidebar is open.</p> : <p>Welcome to the Library! The sidebar is closed.</p>}
 
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
                 {profileList.map(profile => (
@@ -94,16 +93,20 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                         height: '300px',
                         backgroundColor: '#fff',
                         padding: '20px',
-                        borderTopLeftRadius: '10px',
-                        borderTopRightRadius: '10px',
+                        borderTopLeftRadius: '20px',
+                        borderTopRightRadius: '20px',
                         transition: '0.5s',
-                        boxShadow: '0 -5px 5px -5px #333',
+                        background: theme.card,
                     }}
                 >
                     <h2>{selectedProfile.name}</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus metus vel arcu pulvinar, a ultrices mi euismod. Quisque accumsan, orci ac sollicitudin elementum, sem justo cursus velit, et tristique libero leo sed nisi.</p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginBottom: '15px' }}>
-                        <LibraryTypeBadge type={selectedProfile.types[0]}/>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginBottom: '15px', bottom: '0', position: 'absolute' }}>
+                        {
+                            selectedProfile.types.map((type, index) => (
+                                <LibraryTypeBadge key={index} type={type}/>
+                            ))
+                        }
                     </div>
                     <button
                         onClick={handleCloseProfile}
@@ -111,7 +114,7 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                             position: 'absolute',
                             top: '20px',
                             right: '20px',
-                            backgroundColor: '#333',
+                            backgroundColor: theme.accent,
                             color: 'white',
                             padding: '10px 20px',
                             borderRadius: '5px',
