@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import Sidebar from "./components/Sidebar";
 import Landing from "./pages/Landing";
 import Library from "./pages/Library";
-import Browser from "./pages/Browser";
 import Services from "./pages/Services";
 import User from "./pages/User";
 import LoginRegister from "./pages/LoginRegister";

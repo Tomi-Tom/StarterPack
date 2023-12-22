@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useTheme } from "styled-components";
+import axios from "axios";
 
 import YoutubeLogo from "../assets/Youtube.png";
 import SpotifyLogo from "../assets/Spotify.png";
@@ -28,6 +29,24 @@ import ZoomLogo from "../assets/Zoom.png";
 const ApplicationCard = ({ profile }: { profile: any }) => {
     const theme = useTheme();
 
+    const handleApplicationClick = async () => {
+
+        const script = "install_" + profile.name + ".sh";
+
+        try {
+            const response = await axios.post("https://???", {
+                script,
+            });
+
+            setTimeout(() => {
+                console.log("Instalation successful", response.data);
+            }, 2000);
+        } catch (error) {
+            console.error("Instalation failed", error);
+            alert("Instalation failed. Please try again later.");
+        }
+    }
+
     return (
         <div
             key={profile.id}
@@ -47,6 +66,7 @@ const ApplicationCard = ({ profile }: { profile: any }) => {
         >
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <img
+                    onClick={() => handleApplicationClick()}
                     src={profile.image}
                     alt="profile"
                     style={{

@@ -1,17 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-
-interface LibraryTypeBadgeProps {
-    type: string;
-}
-
-const Badge = styled.span<{ color: string }>`
-  font-size: 12px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: ${(props) => props.color};
-  color: #fff;
-`;
 
 interface LibraryTypeBadgeProps {
     type: string;
