@@ -3,13 +3,11 @@ import {useTheme} from "styled-components";
 
 interface LandingProps {
     sidebarOpen: boolean;
-    setCurrent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Landing = ({ sidebarOpen, setCurrent }: LandingProps) => {
+const Landing = ({ sidebarOpen }: LandingProps) => {
     const theme = useTheme();
     const handleStartClick = () => {
-        setCurrent("library")
         console.log("Start Here button clicked!");
     };
 
