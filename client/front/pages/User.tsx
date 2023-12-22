@@ -16,15 +16,15 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
         phone: "+1 123-456-7890",
         country: "United States",
         bio:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst.",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst.",
     };
 
     const profiles = [
-        { name: "Creative Workspace", types: ["Créatif"] },
-        { name: "Gaming Setup", types: ["Gaming"] },
+        { name: "Creative Workspace", types: ["Creatif", "Design"] },
+        { name: "Gaming Setup", types: ["Gaming", "Divertissement"] },
         { name: "Web Development Workspace", types: ["Tech"] },
-        { name: "Reading Nook", types: ["Lecture"] },
-        { name: "Productivity Hub", types: ["Productivité"] },
+        { name: "Reading Nook", types: ["Lecture", "Productivite", "Creatif"] },
+        { name: "Productivity Hub", types: ["Productivite", "Tech"] },
     ];
 
     return (
@@ -36,63 +36,81 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
             padding: "20px", background: theme.background,
             color: theme.text
         }}>
-            <h1>User Page</h1>
             <div
                 style={{
                     backgroundColor: theme.card,
                     borderRadius: "10px",
-                    padding: "20px",
                     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                     width: "80%",
                     display: "flex",
-                    flexDirection: "column",
+                    flexDirection: "row",
                     alignItems: "center",
                     marginBottom: "20px",
                 }}>
-                <img
+                <div
                     style={{
-                        width: "150px",
-                        height: "150px",
-                        borderRadius: "50%",
-                    }}
-                    src={profileImage} alt="Profile"
-                />
-                <div style={{
-                    marginTop: "20px",
-                    textAlign: "center",
-                }}>
-                    <h1>{userInformation.name}</h1>
-                    <h2>{userInformation.title}</h2>
-                </div>
-                <div>
-                    <h3
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        width: "50%",
+                        backgroundColor: theme.backgroundSecondary,
+                        borderRadius: "10px",
+                        padding: "20px",
+                        marginRight: "20px",
+                    }}>
+                    <img
                         style={{
-                            fontSize: "18px",
-                            marginBottom: "10px",
+                            width: "150px",
+                            height: "150px",
+                            borderRadius: "50%",
+                        }}
+                        src={profileImage} alt="Profile"
+                    />
+                    <div style={{
+                        marginTop: "20px",
+                        textAlign: "center",
+                    }}>
+                        <h1>{userInformation.name}</h1>
+                        <h2>{userInformation.title}</h2>
+                    </div>
+                    <div>
+                        <h3
+                            style={{
+                                fontSize: "18px",
+                                marginBottom: "10px",
+                            }}>
+                            User Information:
+                        </h3>
+                        <p style={{
+                            fontSize: "16px",
+                            margin: "5px 0",
                         }}>
-                        User Information:
-                    </h3>
-                    <p style={{
-                        fontSize: "16px",
-                        margin: "5px 0",
-                    }}>
-                        Email: {userInformation.email}
-                    </p>
-                    <p style={{
-                        fontSize: "16px",
-                        margin: "5px 0",
-                    }}>
-                        Phone: {userInformation.phone}
-                    </p>
-                    <p style={{
-                        fontSize: "16px",
-                        margin: "5px 0",
-                    }}>
-                        Country: {userInformation.country}
-                    </p>
+                            Email: {userInformation.email}
+                        </p>
+                        <p style={{
+                            fontSize: "16px",
+                            margin: "5px 0",
+                        }}>
+                            Phone: {userInformation.phone}
+                        </p>
+                        <p style={{
+                            fontSize: "16px",
+                            margin: "5px 0",
+                        }}>
+                            Country: {userInformation.country}
+                        </p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Bio:</h3>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        width: "50%",
+                        borderRadius: "10px",
+                        padding: "20px",
+                    }}>
+                    <h1>Bio:</h1>
                     <p>{userInformation.bio}</p>
                 </div>
             </div>
@@ -117,7 +135,7 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
                              display: "flex",
                              flexDirection: "column",
                              alignItems: "center",
-                             marginBottom: "20px",
+                             marginBottom: "10px",
                          }}>
                         <div>
                             <h2>{profile.name}</h2>
