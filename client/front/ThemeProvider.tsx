@@ -2,12 +2,13 @@ import React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 const theme = {
-    background: '#141214',
-    backgroundSecondary: '#444244',
+    background: '#242224',
+    backgroundSecondary: '#343234',
+    lightBackground: '#bab7ba',
     accent: '#886644',
     accentSecondary: '#553311',
     card: '#595559',
-    text: '#eeeaee',
+    text: '#dedade',
 };
 
 interface ThemeProviderProps {

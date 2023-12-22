@@ -1,67 +1,13 @@
 import React, { useState, useMemo } from "react";
-import styled from 'styled-components';
+import {useTheme} from 'styled-components';
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
 
 interface BrowserProps {
     sidebarOpen: boolean;
 }
 
-const BrowserContainer = styled.div`
-  margin-left: ${(props) => (props.sidebarOpen ? '250px' : '80px')};
-  padding: 20px;
-  transition: margin-left 0.5s;
-`;
-
-const PageTitle = styled.h1`
-  font-size: 24px;
-  margin-bottom: 20px;
-`;
-
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  border: 1px solid ${(props) => props.theme.background};
-  border-radius: 5px;
-`;
-
-const ProfileContainer = styled.div`
-  width: 100%;
-  max-height: 825px;
-  overflow-y: auto; /* Ajoutez le défilement vertical lorsque nécessaire */
-`;
-
-const ProfileItem = styled.div`
-  border: 1px solid ${(props) => props.theme.background};
-  border-radius: 5px;
-  margin-bottom: 10px;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => props.theme.background};
-    color: ${(props) => props.theme.text};
-  }
-
-  h2 {
-    margin-bottom: 5px;
-    font-size: 18px;
-  }
-
-  span {
-    font-size: 14px;
-  }
-
-  .badge-container {
-    display: flex;
-    margin-top: 5px;
-  }
-`;
-
 const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
+    const theme = useTheme();
     const initialProfileList = useMemo(() => [
         { name: "Setup Photography", types: ["Créatif"] },
         { name: "Gaming Room", types: ["Gaming"] },
@@ -92,32 +38,64 @@ const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
     };
 
     return (
-        <BrowserContainer sidebarOpen={sidebarOpen}>
-            <PageTitle style={{ textAlign: 'center' }}>Browser</PageTitle>
+        <div
+            style={{
+                marginLeft: sidebarOpen ? '250px' : '80px',
+                padding: '20px',
+                background: theme.background,
+                color: theme.text,
+            }}
+        >
+            <h1 style={{textAlign: 'center'}}>Browser</h1>
 
-            <SearchInput
+            <input
                 type="text"
                 placeholder="Search profiles..."
                 value={searchTerm}
                 onChange={handleSearchChange}
+                style={{
+                    width: '100%',
+                    padding: '10px',
+                    boxSizing: 'border-box',
+                    marginBottom: '20px',
+                    borderRadius: '5px',
+                    background: theme.lightBackground,
+                    color: theme.text,
+                }}
             />
 
-            <ProfileContainer>
+            <div style={{width: '100%', maxHeight: '89vh', overflowY: 'auto'}}>
                 {profileList.map((profile, index) => (
-                    <ProfileItem key={index}>
-                        <div>
-                            <h2>{profile.name}</h2>
-                            <span>{profile.types.join(', ')}</span>
-                            <div className="badge-container">
+                    <div
+                        key={index}
+                        style={{
+                            backgroundColor: theme.card,
+                            borderRadius: '5px',
+                            marginBottom: '10px',
+                            padding: '15px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            width: '100%'
+                        }}>
+                            <h2 style={{marginBottom: '5px', fontSize: '18px'}}>{profile.name}</h2>
+                            <div className="badge-container" style={{display: 'flex', flexWrap: 'wrap', gap: '5px'}}>
                                 {profile.types.map((type, tagIndex) => (
-                                    <LibraryTypeBadge key={tagIndex} type={type} />
+                                    <LibraryTypeBadge key={tagIndex} type={type}/>
                                 ))}
                             </div>
                         </div>
-                    </ProfileItem>
+                    </div>
                 ))}
-            </ProfileContainer>
-        </BrowserContainer>
+            </div>
+        </div>
     );
 };
 

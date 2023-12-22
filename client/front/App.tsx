@@ -30,14 +30,14 @@ const App: React.FC = () => {
         <ThemeProvider>
                 {
                     isLoggedIn ?
-                    <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> :
-                    <></>
+                        <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> :
+                        <></>
                 }
-                <div>
+                <div style={{ height: '100vh' }}>
                     {!isLoggedIn ? (
                         <LoginRegister />
                     ) : (
-                        <div>
+                        <div style={{ marginTop: '-40px' }}>
                             {React.cloneElement(components[current] as React.ReactElement, { sidebarOpen })}
                         </div>
                     )}
