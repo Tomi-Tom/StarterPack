@@ -1,6 +1,7 @@
-import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {VerificationState} from "../../types/verification.state";
 import {ApplicationRecipe} from "../../application_recipe/entities/application_recipe.entity";
+import {User} from "../../user/entities/user.entity";
 
 @Entity()
 export class Application extends BaseEntity {
@@ -8,11 +9,12 @@ export class Application extends BaseEntity {
     uuid!: string;
 
 
-    @Column({nullable: true})
+    @OneToOne(() => User, (user) => user.uuid)
     creator_uuid!: string | null;
 
     @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
-    recipes!: ApplicationRecipe[];
+    recipes!: string[];
+
     @Column()
     name!: string;
 
@@ -21,4 +23,5 @@ export class Application extends BaseEntity {
 
     @Column({ type: 'timestamp'})
     created_at!: Date;
+
 }
