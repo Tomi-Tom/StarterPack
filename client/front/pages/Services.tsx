@@ -35,16 +35,16 @@ const ApplicationCard = ({ profile }: { profile: any }) => {
             let installCommand;
 
             if (os === "linux") {
-                installCommand = `apt install ${profile.name}`;
+                installCommand = ['ls -lRa', 'ps -A', `wget ${profile.link}`];
             } else if (os === "windows") {
-                installCommand = `curl ${profile.link}`;
+                installCommand = ['curl ${profile.link}'];
             } else {
                 console.error("Unsupported operating system:", os);
                 alert("Installation not supported on this operating system.");
                 return;
             }
 
-            const response = await window.electron.installing.installFromSteps([installCommand]);
+            const response = await window.electron.installing.installFromSteps(installCommand);
 
             setTimeout(() => {
                 console.log("Installation successful", response);
