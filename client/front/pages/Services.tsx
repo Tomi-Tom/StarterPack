@@ -85,11 +85,11 @@ const ApplicationCard = ({ profile }: { profile: any }) => {
     );
 };
 
-interface BrowserProps {
+interface ServicesProps {
     sidebarOpen: boolean;
 }
 
-const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
+const Services = ({ sidebarOpen }: ServicesProps) => {
     const theme = useTheme();
     const mock = useMemo(() => [
         { name: "Youtube", link: "https://www.youtube.com", image: YoutubeLogo },
@@ -168,7 +168,7 @@ const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
                 color: theme.text,
             }}
         >
-            <h1 style={{ textAlign: 'center' }}>Browse Services</h1>
+            <h1 style={{ textAlign: 'center' }}>Services</h1>
 
             <input
                 type="text"
@@ -195,4 +195,4 @@ const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
     );
 };
 
-export default Browser;
+export default Services;
