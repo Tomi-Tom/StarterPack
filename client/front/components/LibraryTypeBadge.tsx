@@ -20,11 +20,11 @@ interface LibraryTypeBadgeProps {
 const LibraryTypeBadge = ({ type }: LibraryTypeBadgeProps) => {
     const getTypeColor = (type: string): string => {
         const colorMap: Record<string, string> = {
-            Créatif: '#7FB3D5',
+            Creatif: '#7FB3D5',
             Gaming: '#FF7F50',
             Tech: '#98FB98',
             Lecture: '#9370DB',
-            Productivité: '#FFD700',
+            Productivite: '#FFD700',
             Audio: '#FF4500',
             Video: '#008080',
             Fitness: '#00FF00',
@@ -38,9 +38,18 @@ const LibraryTypeBadge = ({ type }: LibraryTypeBadgeProps) => {
         return colorMap[type] || '#ccc';
     };
 
-    const badgeColor = getTypeColor(type);
-
-    return <Badge color={badgeColor}>{type}</Badge>;
+    return <div
+        style={{
+            backgroundColor: getTypeColor(type),
+            borderRadius: '10px',
+            padding: '2px 5px',
+            margin: '2px',
+            fontSize: '12px',
+            fontWeight: "bolder",
+        }}
+    >
+        {type}
+    </div>;
 };
 
 export default LibraryTypeBadge;

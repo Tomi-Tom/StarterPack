@@ -30,7 +30,7 @@ const Register = ({ setRegister }: RegisterProps) => {
         setLoading(true);
 
         try {
-            const response = await axios.post("https://localhost:8080/register", {
+            const response = await axios.post("https://localhost:8080/auth/register", {
                 username,
                 password,
                 confirmPassword,

@@ -16,20 +16,35 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
     const theme = useTheme();
     const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
 
-    const profileList: Profile[] = [
-        { id: 1, name: "Setup Photography", types: ["Créatif"] },
+    const mock: Profile[] = [
+        { id: 1, name: "Setup Photography", types: ["Creatif"] },
         { id: 2, name: "Setup Gaming", types: ["Gaming"] },
         { id: 3, name: "Web Development Workspace", types: ["Tech"] },
         { id: 4, name: "Book Lover's Corner", types: ["Lecture"] },
-        { id: 5, name: "Home Office", types: ["Productivité"] },
-        { id: 6, name: "Music Production Setup", types: ["Créatif", "Audio"] },
-        { id: 7, name: "Film Editing Station", types: ["Créatif", "Video"] },
+        { id: 5, name: "Home Office", types: ["Productivite"] },
+        { id: 6, name: "Music Production Setup", types: ["Creatif", "Audio"] },
+        { id: 7, name: "Film Editing Station", types: ["Creatif", "Video"] },
         { id: 8, name: "Fitness Zone", types: ["Fitness"] },
         { id: 9, name: "Kitchen Setup", types: ["Cuisine"] },
         { id: 10, name: "Outdoor Adventure Gear", types: ["Aventure", "Outdoor"] },
         { id: 11, name: "Home Theater System", types: ["Divertissement"] },
-        { id: 12, name: "DIY Workshop", types: ["Bricolage", "Créatif"] },
-        { id: 13, name: "Graphic Design Workspace", types: ["Créatif", "Design"] },
+        { id: 12, name: "DIY Workshop", types: ["Bricolage", "Creatif"] },
+        { id: 13, name: "Graphic Design Workspace", types: ["Creatif", "Design"] },
+        { id: 14, name: "Home Recording Studio", types: ["Creatif", "Audio", "Video"] },
+        { id: 15, name: "Home Gym", types: ["Fitness"] },
+        { id: 16, name: "Home Bar", types: ["Cuisine", "Fitness", "Creatif"] },
+    ];
+    const profileList: Profile[] = [
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
+        ...mock,
     ];
 
     const handleProfileClick = (profile: Profile) => {
@@ -45,7 +60,8 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
             style={{
                 marginLeft: sidebarOpen ? '250px' : '80px',
                 padding: '20px',
-                height: '100vh',
+                minHeight: '100vh',
+                height: '100%',
                 textAlign: 'center',
                 background: theme.background,
                 color: theme.text,

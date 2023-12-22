@@ -24,7 +24,7 @@ const Login = ({ setRegister }: LoginProps) => {
         setLoading(true);
 
         try {
-            const response = await axios.post("https://localhost:8080/login", {
+            const response = await axios.post("https://localhost:8080/auth/login", {
                 username,
                 password,
             });
