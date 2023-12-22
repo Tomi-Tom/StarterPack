@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import { useTheme } from "styled-components";
-import axios from "axios";
 
 import YoutubeLogo from "../assets/Youtube.png";
 import SpotifyLogo from "../assets/Spotify.png";
@@ -31,21 +30,30 @@ const ApplicationCard = ({ profile }: { profile: any }) => {
 
     const handleApplicationClick = async () => {
 
-        const script = "install_" + profile.name + ".sh";
-
         try {
-            const response = await axios.post("https://???", {
-                script,
-            });
+            const os = await window.electron.identifying.identify();
+            let installCommand;
+
+            if (os === "linux") {
+                installCommand = `apt install ${profile.name}`;
+            } else if (os === "windows") {
+                installCommand = `curl ${profile.link}`;
+            } else {
+                console.error("Unsupported operating system:", os);
+                alert("Installation not supported on this operating system.");
+                return;
+            }
+
+            const response = await window.electron.installing.installFromSteps([installCommand]);
 
             setTimeout(() => {
-                console.log("Instalation successful", response.data);
+                console.log("Installation successful", response);
             }, 2000);
         } catch (error) {
-            console.error("Instalation failed", error);
-            alert("Instalation failed. Please try again later.");
+            console.error("Installation failed", error);
+            alert("Installation failed. Please try again later.");
         }
-    }
+    };
 
     return (
         <div
@@ -93,6 +101,7 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
     const theme = useTheme();
     const mock = useMemo(() => [
         { name: "Youtube", link: "https://www.youtube.com", image: YoutubeLogo },
+        { name: "Discord", link: "https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86", image: DiscordLogo },
         { name: "Spotify", link: "https://www.spotify.com", image: SpotifyLogo },
         { name: "Netflix", link: "https://www.netflix.com", image: NetflixLogo },
         { name: "Amazon", link: "https://www.amazon.com", image: AmazonLogo },
@@ -100,7 +109,6 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
         { name: "Twitch", link: "https://www.twitch.tv", image: TwitchLogo },
         { name: "Photoshop", link: "https://www.photoshop.com", image: PhotoshopLogo },
         { name: "Steam", link: "https://www.steampowered.com", image: SteamLogo },
-        { name: "Discord", link: "https://www.discord.com", image: DiscordLogo },
         { name: "Github", link: "https://www.github.com", image: GithubLogo },
         { name: "Google", link: "https://www.google.com", image: GoogleLogo },
         { name: "Facebook", link: "https://www.facebook.com", image: FacebookLogo },
