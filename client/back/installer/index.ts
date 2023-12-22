@@ -9,26 +9,30 @@ export default class Installer {
 		let index = 0;
 		for (const step of steps) {
 			const argv = step.split(/\s/);
+			if (!argv[0]) {
+				Logger.log("error", `Installation failed at step #${index}, no command provided`);
+				return false;
+			}
 			const childProcess = spawn(argv[0], argv.slice(1));
-			const status = await new Promise((resolve, reject) => {
+			const status = await new Promise((resolve: (value: unknown) => void, reject) => {
 				childProcess.once("close", code => {
 					if (code !== 0) {
 						Logger.log("error", `Step #${index} failed with code ${code}`);
 						reject(code);
-					} else resolve();
+					} else resolve(true);
 				});
 				childProcess.stdout.on("data", message => {
 					message
 						.toString()
 						.split("\n")
-						.filter(message => message)
-						.forEach(message => Logger.log("debug", `Received log from #${index}: ${message}`));
+						.filter((message: string) => message)
+						.forEach((message: string) => Logger.log("debug", `Received log from #${index}: ${message}`));
 				});
 				childProcess.stderr.on("data", error => error
 					.toString()
 					.split("\n")
-					.filter(message => message)
-					.forEach(error => Logger.log("error", `Received error from #${index}: ${error}`)));
+					.filter((message: string) => message)
+					.forEach((error: string) => Logger.log("error", `Received error from #${index}: ${error}`)));
 				childProcess.once("exit", code => Logger.log("debug", `Step #${index} exited with code ${code}`));
 			})
 				.then(() => true)
