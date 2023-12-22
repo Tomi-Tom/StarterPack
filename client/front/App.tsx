@@ -5,7 +5,7 @@ import Library from "./pages/Library";
 import Browser from "./pages/Browser";
 import Services from "./pages/Services";
 import User from "./pages/User";
-import Login from "./pages/Login";
+import LoginRegister from "./pages/LoginRegister";
 import ThemeProvider from "./ThemeProvider";
 import './styles.css';
 
@@ -20,7 +20,7 @@ const components: Record<string, JSX.Element> = {
 const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [theme, setTheme] = useState<"light" | "dark">("dark");
 
     useEffect(() => {
@@ -43,19 +43,20 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <div style={{ height: '100vh', overflow: 'hidden' }}>
-                <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                {
+                    isLoggedIn ?
+                    <Sidebar setCurrent={setCurrent} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> :
+                    <></>
+                }
                 <div>
                     {!isLoggedIn ? (
-                        <Login />
+                        <LoginRegister />
                     ) : (
                         <div>
                             {React.cloneElement(components[current] as React.ReactElement, { sidebarOpen })}
                         </div>
                     )}
                 </div>
-                <button onClick={toggleTheme} style={{ position: 'fixed', bottom: '20px', left: '20px', padding: '10px', fontSize: '16px' }}>
-                    Switch Theme
-                </button>
             </div>
         </ThemeProvider>
     );
