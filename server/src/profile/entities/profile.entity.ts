@@ -3,7 +3,7 @@ import {User} from "../../user/entities/user.entity";
 import {VerificationState} from "../../types/verification.state";
 
 @Entity()
-export class Profile extends BaseEntity {
+export default class Profile {
     @PrimaryGeneratedColumn('uuid')
     uuid!: string;
 

@@ -5,7 +5,6 @@ import {Repository} from "typeorm";
 import {v4 as uuidv4} from 'uuid';
 import {CreateApplicationDto} from "./dto/create.application.dto";
 import {VerificationState} from "../types/verification.state";
-import {ApplicationRecipe} from "../application_recipe/entities/application_recipe.entity";
 
 @Injectable()
 export class ApplicationService {
