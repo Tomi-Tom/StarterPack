@@ -63,8 +63,8 @@ const Register = ({ setRegister }: RegisterProps) => {
 
 
             <div style={{
-                width: '350px',
-                height: '400px',
+                width: '300px',
+                height: '385px',
                 margin: '0 auto',
                 padding: '20px',
                 borderRadius: '10px',
@@ -74,33 +74,45 @@ const Register = ({ setRegister }: RegisterProps) => {
                 <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
                 <input
                     type="text"
+                    placeholder={"Username..."}
                     value={username}
                     onChange={handleUsernameChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground}}
                 />
 
                 <label style={{marginBottom: '8px', display: 'block'}}>Password</label>
                 <input
                     type="password"
+                    placeholder={"Password..."}
                     value={password}
                     onChange={handlePasswordChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground,}}
                 />
 
                 <label style={{marginBottom: '8px', display: 'block'}}>Confirm Password</label>
                 <input
                     type="password"
+                    placeholder={"Confirm Password..."}
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
-                />
+                    style={{
+                        width: '100%',
+                        padding: '8px',
+                        marginBottom: '16px',
+                        boxSizing: 'border-box',
+                        borderRadius: '5px',
+                        border: '0px',
+                        outline: confirmPassword === password ? 'none' : `solid 3px ${theme.error}`,
+                        backgroundColor: theme.lightBackground,
+                    }}/>
 
                 <button
                     onClick={handleRegister}
                     disabled={loading}
                     style={{
-                        width: '100%',
+                        width: '50%',
                         padding: '10px',
+                        marginTop: '25px',
                         backgroundColor: '#28a745',
                         color: '#fff',
                         border: 'none',

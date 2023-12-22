@@ -54,8 +54,8 @@ const Login = ({ setRegister }: LoginProps) => {
             color: theme.text,
         }}>
             <div style={{
-                width: '350px',
-                height: '400px',
+                width: '300px',
+                height: '300px',
                 margin: '0 auto',
                 padding: '20px',
                 borderRadius: '10px',
@@ -67,26 +67,29 @@ const Login = ({ setRegister }: LoginProps) => {
                 <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
                 <input
                     type="text"
+                    placeholder={"Username..."}
                     value={username}
                     onChange={handleUsernameChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground}}
                 />
 
                 <label style={{marginBottom: '8px', display: 'block'}}>Password</label>
                 <input
                     type="password"
+                    placeholder={"Password..."}
                     value={password}
                     onChange={handlePasswordChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box'}}
+                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground}}
                 />
 
                 <button
                     onClick={handleLogin}
                     disabled={loading}
                     style={{
-                        width: '100%',
+                        width: '50%',
                         padding: '10px',
-                        backgroundColor: '#28a745',
+                        marginTop: '25px',
+                        backgroundColor: theme.accent,
                         color: '#fff',
                         border: 'none',
                         borderRadius: '5px',

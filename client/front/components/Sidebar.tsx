@@ -44,11 +44,11 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOp
                 width: sidebarOpen ? '250px' : '80px',
                 height: '100vh',
                 background: theme.backgroundSecondary,
-                color: '#fff',
+                color: theme.text,
                 position: 'fixed',
                 left: 0,
                 overflowX: 'hidden',
-                padding: '20px',
+                padding: '20px 20px 0 20px',
                 boxSizing: 'border-box',
                 zIndex: 1,
             }}>
@@ -60,15 +60,17 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOp
                 }}>
                     <button style={{
                         transition: '0.5s',
-                        padding: '10px',
-                        fontSize: '16px',
-                        marginBottom: '20px',
+                        padding: '5px',
+                        width: '30px',
+                        fontSize: '15px',
                         border: 'none',
-                        borderRadius: '5px',
+                        borderRadius: '5px 0 0 5px',
                         background: theme.card,
                         color: theme.text,
                         cursor: 'pointer',
-                        width: '40px',
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
                     }} onClick={toggleSidebar}>{sidebarOpen ? "<" : ">"}</button>
                     <h1>
                         {sidebarOpen ? (
@@ -94,8 +96,8 @@ const Sidebar: React.FC<SidebarProps> = ({ setCurrent, sidebarOpen, setSidebarOp
                         marginBottom: '20px',
                         border: 'none',
                         borderRadius: '5px',
-                        background: '#555',
-                        color: '#fff',
+                        background: theme.accent,
+                        color: theme.text,
                         cursor: 'pointer',
                     }} onClick={() => setCurrent("user")}>{sidebarOpen ? "User" : "U"}</button>
                 </div>
