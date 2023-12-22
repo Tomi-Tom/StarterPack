@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 import Logger, { LogLevel } from "./logger/";
 import Installer from "./installer";
+import Identifier from "./identifier";
+
 
 const API = {
 	logging: {
@@ -8,6 +10,9 @@ const API = {
 	},
 	installing: {
 		installFromSteps: (steps: string[]): ReturnType<typeof Installer.installFromSteps> => ipcRenderer.invoke("installFromSteps", steps)
+	},
+	identifying: {
+		identify: (): ReturnType<typeof Identifier.identify> => ipcRenderer.invoke("identify")
 	}
 };
 

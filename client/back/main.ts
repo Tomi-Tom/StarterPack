@@ -3,6 +3,7 @@ import { app, BrowserWindow } from "electron";
 import Logger from "./logger";
 
 import("./installer");
+import("./identifier");
 
 process.env.DIST = join(__dirname, "../dist");
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : join(process.env.DIST, "../public");
