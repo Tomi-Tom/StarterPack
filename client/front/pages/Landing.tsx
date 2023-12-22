@@ -1,25 +1,69 @@
 import React from "react";
-
-interface Styles {
-    container: React.CSSProperties;
-}
-
-const styles: Styles = {
-    container: {
-        marginTop: '50px',
-        textAlign: 'center',
-    },
-};
+import {useTheme} from "styled-components";
 
 interface LandingProps {
     sidebarOpen: boolean;
+    setCurrent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Landing: React.FC<LandingProps> = ({ sidebarOpen }) => {
+const Landing = ({ sidebarOpen, setCurrent }: LandingProps) => {
+    const theme = useTheme();
+    const handleStartClick = () => {
+        setCurrent("library")
+        console.log("Start Here button clicked!");
+    };
+
     return (
-        <div style={{ ...styles.container, marginLeft: sidebarOpen ? '250px' : '80px', transition: '0.5s' }}>
-            <h1>Landing</h1>
-            {sidebarOpen ? <p>Welcome! The sidebar is open.</p> : <p>Welcome! The sidebar is closed.</p>}
+        <div
+            style={{
+                marginLeft: sidebarOpen ? '250px' : '80px',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100vh",
+                backgroundColor: theme.background,
+                color: theme.text,
+                textAlign: "center",
+                padding: "20px",
+                boxSizing: "border-box",
+            }}
+        >
+            <h1
+                style={{
+                    fontSize: "64px",
+                    marginBottom: "30px",
+                }}
+            >
+                Bienvenue sur Starter Pack
+            </h1>
+            <p
+                style={{
+                    fontSize: "24px",
+                    marginBottom: "-10px",
+                }}
+            >
+                Explorez un nouveau monde numérique. Bienvenue dans votre portail d'innovation
+            </p>
+            <h2 style={{
+                fontSize: "28px",
+                marginBottom: "60px",
+            }}>installez, simplifiez, réussissez!</h2>
+            <button
+                style={{
+                    padding: "15px 30px",
+                    fontSize: "20px",
+                    border: "none",
+                    borderRadius: "5px",
+                    backgroundColor: theme.accent,
+                    color: theme.text,
+                    cursor: "pointer",
+                    transition: "background-color 0.3s",
+                }}
+                onClick={handleStartClick}
+            >
+                Commencer ici
+            </button>
         </div>
     );
 };
