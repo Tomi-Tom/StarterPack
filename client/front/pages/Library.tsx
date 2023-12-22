@@ -89,7 +89,7 @@ const Library: React.FC<LibraryProps> = ({ sidebarOpen }) => {
                         onClick={() => handleProfileClick(profile)}
                     >
                         <strong style={{ fontSize: '18px', marginBottom: '10px' }}>{profile.name}</strong>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', position: 'absolute', bottom: '5', marginBottom: '2px' }}>
                             {profile.types.map((type, index) => (
                                 <LibraryTypeBadge key={index} type={type}/>
                             ))}
