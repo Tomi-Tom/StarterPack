@@ -1,79 +1,87 @@
-import React, { useState } from 'react';
-import youtubeLogo from "../assets/Youtube.png";
-import SpotifyLogo from "../assets/Spotify.png";
-import MinecraftLogo from "../assets/Minecraft.png";
-import Modal from "../components/Modal";
+import React, { useState, useMemo } from "react";
+import LibraryTypeBadge from "../components/LibraryTypeBadge";
 
-interface ServicesProps {
+interface BrowserProps {
     sidebarOpen: boolean;
 }
 
-const Services: React.FC<ServicesProps> = ({ sidebarOpen }) => {
-    const [selectedApp, setSelectedApp] = useState<string | null>(null);
+const Browser: React.FC<BrowserProps> = ({ sidebarOpen }) => {
+    const initialProfileList = useMemo(() => [
+        { name: "Setup Photography", types: ["Créatif"] },
+        { name: "Gaming Room", types: ["Gaming"] },
+        { name: "Web Development Workspace", types: ["Tech"] },
+        { name: "Book Lover's Corner", types: ["Lecture"] },
+        { name: "Home Office", types: ["Productivité"] },
+        { name: "Music Production Setup", types: ["Créatif", "Audio"] },
+        { name: "Film Editing Station", types: ["Créatif", "Video"] },
+        { name: "Fitness Zone", types: ["Fitness"] },
+        { name: "Kitchen Setup", types: ["Cuisine"] },
+        { name: "Outdoor Adventure Gear", types: ["Aventure", "Outdoor"] },
+        { name: "Home Theater System", types: ["Divertissement"] },
+        { name: "DIY Workshop", types: ["Bricolage", "Créatif"] },
+        { name: "Graphic Design Workspace", types: ["Créatif", "Design"] },
+    ], []);
 
-    const appList = [
-        { name: "Youtube", logo: youtubeLogo },
-        { name: "Spotify", logo: SpotifyLogo },
-        { name: "Minecraft", logo: MinecraftLogo },
-        { name: "Netflix", logo: SpotifyLogo },
-        { name: "WhatsApp", logo: SpotifyLogo },
-        { name: "Twitter", logo: SpotifyLogo },
-        { name: "Instagram", logo: SpotifyLogo },
-        { name: "Facebook", logo: SpotifyLogo },
-        { name: "Google Drive", logo: SpotifyLogo },
-        { name: "Trello", logo: SpotifyLogo },
-    ];
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [profileList, setProfileList] = useState(initialProfileList);
 
-    const handleAppClick = (appName: string) => {
-        setSelectedApp(appName);
+    const filterProfiles = (search: string) => {
+        const filteredList = initialProfileList.filter(profile => profile.name.toLowerCase().includes(search.toLowerCase()));
+        setProfileList(filteredList);
     };
 
-    const handleCloseModal = () => {
-        setSelectedApp(null);
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+        filterProfiles(event.target.value);
     };
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px', marginLeft: sidebarOpen ? '250px' : '80px', transition: '0.5s' }}>
-            <h1>Services</h1>
-            {sidebarOpen ? <p>Open</p> : <p>Closed</p>}
+        <div style={{ marginLeft: sidebarOpen ? '250px' : '80px', padding: '20px', transition: 'margin-left 0.5s' }}>
+            <h1 style={{ textAlign: 'center' }}>Browser</h1>
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: '20px' }}>
-                <h2>Application List</h2>
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    {appList.map((app, index) => (
-                        <div
-                            key={index}
-                            style={{
-                                margin: '10px',
-                                textAlign: 'center',
-                                cursor: 'pointer',
-                                transition: '0.3s',
-                                backgroundColor: selectedApp === app.name ? '#ccc' : 'white',
-                                borderRadius: '8px',
-                                padding: '15px',
-                                width: '200px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                position: 'relative',
-                                border: '1px solid #ccc',
-                            }}
-                            onClick={() => handleAppClick(app.name)}
-                        >
-                            <img src={app.logo} alt={app.name} style={{ width: '80px', height: '80px', borderRadius: '25%' }} />
-                            <p style={{ marginTop: '5px' }}>{app.name}</p>
+            <input
+                type="text"
+                placeholder="Search profiles..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                style={{
+                    width: '100%',
+                    padding: '10px',
+                    boxSizing: 'border-box',
+                    marginBottom: '20px',
+                    border: '1px solid #ddd',
+                    borderRadius: '5px',
+                }}
+            />
+
+            <div style={{ width: '100%', maxHeight: '825px', overflowY: 'auto' }}>
+                {profileList.map((profile, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            border: '1px solid #ddd',
+                            borderRadius: '5px',
+                            marginBottom: '10px',
+                            padding: '15px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <div>
+                            <h2 style={{ marginBottom: '5px', fontSize: '18px' }}>{profile.name}</h2>
+                            <span style={{ fontSize: '14px' }}>{profile.types.join(', ')}</span>
+                            <div style={{ display: 'flex', marginTop: '5px' }}>
+                                {profile.types.map((type, tagIndex) => (
+                                    <LibraryTypeBadge key={tagIndex} type={type} />
+                                ))}
+                            </div>
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
-
-            {selectedApp && (
-                <Modal title={selectedApp} onClose={handleCloseModal} sidebarOpen={sidebarOpen}>
-                    <p>Description détaillée de l'application {selectedApp}</p>
-                </Modal>
-            )}
         </div>
     );
 };
 
-export default Services;
+export default Browser;
