@@ -20,7 +20,7 @@ const components: Record<string, JSX.Element> = {
 const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
     const [theme, setTheme] = useState<"light" | "dark">("dark");
 
     useEffect(() => {
