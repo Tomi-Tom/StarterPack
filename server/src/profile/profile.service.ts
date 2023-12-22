@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
-import {Profile} from "./entities/profile.entity";
+import Profile from "./entities/profile.entity";
 import {Repository} from "typeorm";
 import {ProfileDto} from "./dto/profile.dto";
 import {v4 as uuidv4} from 'uuid';
