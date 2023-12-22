@@ -9,7 +9,7 @@ import ThemeProvider from "./ThemeProvider";
 import './styles.css';
 
 const components: Record<string, React.ReactNode> = {
-    landing: <Landing sidebarOpen setCurrent/>,
+    landing: <Landing sidebarOpen/>,
     library: <Library sidebarOpen />,
     services: <Services sidebarOpen />,
     user: <User sidebarOpen />,
@@ -36,7 +36,7 @@ const App: React.FC = () => {
                         <LoginRegister />
                     ) : (
                         <div style={{ marginTop: '-40px' }}>
-                            {React.cloneElement(components[current] as React.ReactElement, { sidebarOpen, setCurrent })}
+                            {React.cloneElement(components[current] as React.ReactElement, { sidebarOpen })}
                         </div>
                     )}
                 </div>
