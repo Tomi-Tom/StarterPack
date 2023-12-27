@@ -104,7 +104,7 @@ const Login = ({ setRegister }: LoginProps) => {
             <p style={{marginTop: '10px'}}>
                 Don't have an account?{" "}
                 <button onClick={() => setRegister(true)}
-                        style={{border: 'none', color: '#007BFF', background: 'none', cursor: 'pointer'}}>
+                        style={{border: 'none', color: theme.accentSecondary, background: 'none', cursor: 'pointer'}}>
                     Register
                 </button>
             </p>

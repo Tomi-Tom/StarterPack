@@ -18,7 +18,7 @@ const components: Record<string, React.ReactNode> = {
 const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     if (localStorage.getItem("token")) {
         setIsLoggedIn(true);

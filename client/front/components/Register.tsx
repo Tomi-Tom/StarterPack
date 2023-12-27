@@ -102,7 +102,7 @@ const Register = ({ setRegister }: RegisterProps) => {
                         boxSizing: 'border-box',
                         borderRadius: '5px',
                         border: '0px',
-                        outline: confirmPassword === password ? 'none' : `solid 3px ${theme.error}`,
+                        outline: confirmPassword === password ? 'none' : `solid 3px #ff0000`,
                         backgroundColor: theme.lightBackground,
                     }}/>
 
@@ -113,7 +113,7 @@ const Register = ({ setRegister }: RegisterProps) => {
                         width: '50%',
                         padding: '10px',
                         marginTop: '25px',
-                        backgroundColor: '#28a745',
+                        backgroundColor: theme.accent,
                         color: '#fff',
                         border: 'none',
                         borderRadius: '5px',
@@ -128,7 +128,7 @@ const Register = ({ setRegister }: RegisterProps) => {
             <p style={{marginTop: '10px'}}>
                 Already have an account?{" "}
                 <button onClick={() => setRegister(false)}
-                        style={{border: 'none', color: '#28a745', background: 'none', cursor: 'pointer'}}>
+                        style={{border: 'none', color: theme.accentSecondary, background: 'none', cursor: 'pointer'}}>
                     Login
                 </button>
             </p>

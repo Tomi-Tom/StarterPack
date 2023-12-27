@@ -6,7 +6,7 @@ const theme = {
     backgroundSecondary: '#2A4054',
     lightBackground: '#C8DBE0',
     accent: '#679436',
-    error: '#BE491E',
+    accentSecondary: '#87B456',
     card: '#4A6074',
     text: '#DBEEF3',
 };
