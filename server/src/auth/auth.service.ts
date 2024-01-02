@@ -14,20 +14,20 @@ export class AuthService
     }
     async login(email: string, password: string): Promise<LoginResponseDto>
     {
+        let user;
         try {
-            const user = await this.userService.getUser({email});
-            if (await verify(user.password_hash, password)) {
-                const token = this.generateToken(user.uuid);
-                return {
-                    token,
-                    id: user.uuid,
-                }
-            }
-            else {
-                throw new UnauthorizedException("Invalid password")
-            }
+            user = await this.userService.getUser({email});
         } catch (e) {
             throw new UnauthorizedException("Invalid email");
+        }
+        if (await verify(user.password_hash, password)) {
+            const token = this.generateToken(user.uuid);
+            return {
+                token,
+                id: user.uuid,
+            }
+        } else {
+            throw new UnauthorizedException("Invalid password");
         }
     }
 
