@@ -14,6 +14,7 @@ export class ProfileController {
     createProfile(
         @Body('profile') profile: ProfileDto
     ) {
+        console.log(profile);
         return this.profileService.createProfile(profile);
     }
 

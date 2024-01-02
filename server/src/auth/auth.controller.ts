@@ -26,7 +26,7 @@ export class AuthController {
     })
 
     @Post('login')
-    async logIn( @Body() { email, password}: LoginDto) : Promise<LoginResponseDto> {
+    async logIn( @Body() { email, password }: LoginDto) : Promise<LoginResponseDto> {
         return await this.authService.login( email, password );
     }
 
