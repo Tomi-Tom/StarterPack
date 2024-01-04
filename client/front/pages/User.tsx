@@ -3,6 +3,7 @@ import profileImage from "../assets/profile.png";
 import { useTheme } from "styled-components";
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
 import axios from "axios";
+import modifyLogo from "../assets/modify.png";
 
 interface UserProps {
     sidebarOpen: boolean;
@@ -31,19 +32,27 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
         const getUserInformation = async () => {
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/user/${localStorage.getItem("user_id")}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    }
+                    "http://localhost:3000/user?uuid=" +  localStorage.getItem("user_id"),
                 );
                 setUserInformation(response.data);
             } catch (error) {
                 console.error(error);
             }
         }
-    }
+        const getUserProfiles = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/profile/getProfile?uuid=" + localStorage.getItem("user_id"),
+                );
+                setProfiles(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getUserProfiles();
+        getUserInformation();
+    }, []);
 
     return (
         <div style={{
@@ -128,6 +137,16 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
                         borderRadius: "10px",
                         padding: "20px",
                     }}>
+                    <img
+                        style={{
+                            width: "35px",
+                            height: "25px",
+                            position: "relative",
+                            top: "-130px",
+                            left: "50%",
+                        }}
+                        src={modifyLogo} alt="Modify"
+                    />
                     <h1>Bio:</h1>
                     <p>{userInformation.bio}</p>
                 </div>

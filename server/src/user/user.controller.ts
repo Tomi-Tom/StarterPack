@@ -18,7 +18,7 @@ export class UserController {
 
     @Post()
     async updateUser(
-        @Body() body: {uuid:string , update: {name: string, email: string, bio: string}},
+        @Body() body: {uuid:string , update: any},
     ) {
         return await this.userService.updateUser(body.uuid, body.update);
     }

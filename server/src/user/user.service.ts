@@ -30,6 +30,8 @@ export class UserService {
                 password_hash,
                 created_at,
                 profiles: [],
+                phone: "",
+                country: "",
                 bio: "",
                 is_admin,
             });
@@ -48,15 +50,11 @@ export class UserService {
         return user;
     }
 
-    async updateUser(uuid: string, update: {name: string, email: string, bio: string}): Promise<User> {
+    async updateUser(uuid: string, update: any): Promise<User> {
         const user = await this.userRepository.findOne( {where: {uuid}} );
         if (!user) {
             throw new Error("User not found");
         }
-        user.name = update.name;
-        user.email = update.email;
-        user.bio = update.bio;
-        await this.userRepository.save(user);
-        return user;
+        await this.userRepository.update({uuid}, update);
     }
 }
