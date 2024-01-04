@@ -11,7 +11,7 @@ const Register = ({ setRegister }: RegisterProps) => {
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [email, setEmail] = useState("");
 
     const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setUsername(event.target.value);
@@ -21,8 +21,8 @@ const Register = ({ setRegister }: RegisterProps) => {
         setPassword(event.target.value);
     };
 
-    const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setConfirmPassword(event.target.value);
+    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
     };
 
 
@@ -30,20 +30,23 @@ const Register = ({ setRegister }: RegisterProps) => {
         setLoading(true);
 
         try {
-            const response = await axios.post("https://localhost:8080/auth/register", {
+            const response = await axios.post("http://localhost:3000/auth/register", {
+                email,
                 username,
                 password,
-                confirmPassword,
             });
 
-            setTimeout(() => {
+            if (response.status !== 201) {
                 setLoading(false);
-                console.log("Registration successful", response.data);
-            }, 2000);
+                return;
+            } else {
+                alert("Registration successful");
+                setLoading(false);
+                return;
+            }
         } catch (error) {
+            alert("Registration failed. Please check your information and try again." + error.response.data.message);
             setLoading(false);
-            console.error("Registration failed", error);
-            alert("Registration failed. Please check your information and try again.");
         }
     };
 
@@ -71,13 +74,39 @@ const Register = ({ setRegister }: RegisterProps) => {
                 backgroundColor: theme.card,
             }}>
                 <h1>Register</h1>
+
+                <label style={{marginBottom: '8px', display: 'block'}}>Email</label>
+                <input
+                    type="email"
+                    placeholder={"email..."}
+                    value={email}
+                    onChange={handleEmailChange}
+                    style={{
+                        width: '100%',
+                        padding: '8px',
+                        marginBottom: '16px',
+                        boxSizing: 'border-box',
+                        borderRadius: '5px',
+                        border: '0px',
+                        backgroundColor: theme.lightBackground,
+                    }}/>
+
                 <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
                 <input
                     type="text"
                     placeholder={"Username..."}
                     value={username}
                     onChange={handleUsernameChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground}}
+                    style={{
+                        width: '100%',
+                        padding: '8px',
+                        marginBottom: '16px',
+                        boxSizing: 'border-box',
+                        borderRadius: '5px',
+                        border: '0px',
+                        outline: 'none',
+                        backgroundColor: theme.lightBackground
+                    }}
                 />
 
                 <label style={{marginBottom: '8px', display: 'block'}}>Password</label>
@@ -86,15 +115,6 @@ const Register = ({ setRegister }: RegisterProps) => {
                     placeholder={"Password..."}
                     value={password}
                     onChange={handlePasswordChange}
-                    style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground,}}
-                />
-
-                <label style={{marginBottom: '8px', display: 'block'}}>Confirm Password</label>
-                <input
-                    type="password"
-                    placeholder={"Confirm Password..."}
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
                     style={{
                         width: '100%',
                         padding: '8px',
@@ -102,9 +122,10 @@ const Register = ({ setRegister }: RegisterProps) => {
                         boxSizing: 'border-box',
                         borderRadius: '5px',
                         border: '0px',
-                        outline: confirmPassword === password ? 'none' : `solid 3px ${theme.error}`,
+                        outline: 'none',
                         backgroundColor: theme.lightBackground,
-                    }}/>
+                    }}
+                />
 
                 <button
                     onClick={handleRegister}

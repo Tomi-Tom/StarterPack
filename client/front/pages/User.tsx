@@ -2,6 +2,8 @@ import React from "react";
 import profileImage from "../assets/profile.png";
 import { useTheme } from "styled-components";
 import LibraryTypeBadge from "../components/LibraryTypeBadge";
+import axios from "axios";
+import modifyLogo from "../assets/modify.png";
 
 interface UserProps {
     sidebarOpen: boolean;
@@ -9,7 +11,7 @@ interface UserProps {
 
 const User: React.FC<UserProps> = ({ sidebarOpen }) => {
     const theme = useTheme();
-    const userInformation = {
+    const [userInformation, setUserInformation] = React.useState({
         name: "John Doe",
         title: "Frontend Developer",
         email: "john.doe@example.com",
@@ -17,15 +19,40 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
         country: "United States",
         bio:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor justo ac diam tempor, a suscipit sem sodales. In hac habitasse platea dictumst.",
-    };
-
-    const profiles = [
+    });
+    const [profiles, setProfiles] = React.useState([
         { name: "Creative Workspace", types: ["Creatif", "Design"] },
         { name: "Gaming Setup", types: ["Gaming", "Divertissement"] },
         { name: "Web Development Workspace", types: ["Tech"] },
         { name: "Reading Nook", types: ["Lecture", "Productivite", "Creatif"] },
-        { name: "Productivity Hub", types: ["Productivite", "Tech"] },
-    ];
+        { name: "Productivity Hub", types: ["Productivite", "Tech"]
+        }]);
+
+    React.useEffect(() => {
+        const getUserInformation = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/user?uuid=" +  localStorage.getItem("user_id"),
+                );
+                setUserInformation(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        const getUserProfiles = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:3000/profile/getProfile?uuid=" + localStorage.getItem("user_id"),
+                );
+                setProfiles(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getUserProfiles();
+        getUserInformation();
+    }, []);
 
     return (
         <div style={{
@@ -110,6 +137,16 @@ const User: React.FC<UserProps> = ({ sidebarOpen }) => {
                         borderRadius: "10px",
                         padding: "20px",
                     }}>
+                    <img
+                        style={{
+                            width: "35px",
+                            height: "25px",
+                            position: "relative",
+                            top: "-130px",
+                            left: "50%",
+                        }}
+                        src={modifyLogo} alt="Modify"
+                    />
                     <h1>Bio:</h1>
                     <p>{userInformation.bio}</p>
                 </div>

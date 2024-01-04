@@ -2,7 +2,7 @@ import React from "react";
 import Login from "../components/Login";
 import Register from "../components/Register";
 
-const LoginRegister = () => {
+const LoginRegister = (props) => {
     const [register, setRegister] = React.useState(false);
 
     return (
@@ -10,7 +10,7 @@ const LoginRegister = () => {
             {
                 register ?
                     <Register setRegister={setRegister} /> :
-                    <Login setRegister={setRegister} />
+                    <Login setRegister={setRegister} onLoginSuccess={props.onLoginSuccess} />
             }
         </div>
     );

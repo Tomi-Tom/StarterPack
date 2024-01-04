@@ -18,10 +18,14 @@ const components: Record<string, React.ReactNode> = {
 const App: React.FC = () => {
     const [current, setCurrent] = useState("landing");
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-    if (localStorage.getItem("token")) {
+    const handleLogin = () => {
         setIsLoggedIn(true);
+    }
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
     }
 
     return (
@@ -33,7 +37,7 @@ const App: React.FC = () => {
                 }
                 <div style={{ height: '100vh' }}>
                     {!isLoggedIn ? (
-                        <LoginRegister />
+                        <LoginRegister onLoginSuccess={handleLogin}/>
                     ) : (
                         <div style={{ marginTop: '-40px' }}>
                             {React.cloneElement(components[current] as React.ReactElement, { sidebarOpen })}

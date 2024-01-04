@@ -6,37 +6,59 @@ interface LoginProps {
     setRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Login = ({ setRegister }: LoginProps) => {
+const Login = ({ setRegister, onLoginSuccess }: LoginProps) => {
     const theme = useTheme();
     const [loading, setLoading] = useState(false);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setUsername(event.target.value);
+    const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
     };
 
     const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
 
-    const handleLogin = async () => {
+    const tryLogin = async () => {
         setLoading(true);
 
         try {
-            const response = await axios.post("https://localhost:8080/auth/login", {
-                username,
+            const response = await axios.post("http://localhost:3000/auth/login", {
+                email,
                 password,
             });
 
-            setTimeout(() => {
+            if (response.status !== 201) {
                 setLoading(false);
-                console.log("Login successful", response.data);
-            }, 2000);
+                console.error("Login failed", response.data.message);
+                return;
+            }
+            setLoading(false);
+            return response.data;
         } catch (error) {
             setLoading(false);
             console.error("Login failed", error);
             alert("Login failed. Please check your credentials.");
+        }
+    }
+
+    const handleLogin = async () => {
+        setLoading(true);
+
+        const data = await tryLogin();
+        if (data === undefined) {return;}
+
+        const access_token = data.token;
+        const user_id = data.id;
+
+        try {
+            await localStorage.setItem('token', access_token);
+            await localStorage.setItem('user_id', user_id.toString());
+            onLoginSuccess();
+        }
+        catch (error) {
+            console.error('Error: ', error);
         }
     };
 
@@ -64,12 +86,12 @@ const Login = ({ setRegister }: LoginProps) => {
                 <h1>
                     Login
                 </h1>
-                <label style={{marginBottom: '8px', display: 'block'}}>Username</label>
+                <label style={{marginBottom: '8px', display: 'block'}}>Email</label>
                 <input
                     type="text"
-                    placeholder={"Username..."}
-                    value={username}
-                    onChange={handleUsernameChange}
+                    placeholder={"Email..."}
+                    value={email}
+                    onChange={handleEmailChange}
                     style={{width: '100%', padding: '8px', marginBottom: '16px', boxSizing: 'border-box', borderRadius: '5px', border: '0px', outline: 'none', backgroundColor: theme.lightBackground}}
                 />
 
