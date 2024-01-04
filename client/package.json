@@ -1,14 +1,15 @@
 {
-  "name": "won-launcher-next",
-  "version": "2.0.0",
+  "name": "starterpack-client",
+  "version": "0.0.1",
   "main": "dist-electron/main.js",
-  "description": "World Of Nations Launcher",
+  "description": "StarterPack Client",
   "author": {
-    "email": "contact.crooser@gmail.com",
-    "name": "Crooser",
-    "url": "https://github.com/Croos3r"
+    "email": "starter@pack.com",
+    "name": "StarterPack",
+    "url": "https://github.com/Tomi-Tom/StarterPack"
   },
   "private": true,
+  "homepage": "./",
   "debug": {
     "env": {
       "VITE_DEV_SERVER_URL": "http://127.0.0.1:9999"
@@ -35,8 +36,11 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.4",
+    "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "winston": "^3.8.2"
+    "styled-components": "^6.1.1",
+    "winston": "^3.8.2",
+    "yarn": "^1.22.21"
   }
 }

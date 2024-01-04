@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from "@nestjs/common";
 import {ApiTags} from "@nestjs/swagger";
 import {UserService} from "./user.service";
 
@@ -9,5 +9,18 @@ export class UserController {
         private readonly userService: UserService,
     ) {}
 
+    @Get()
+    async getUser(
+        @Query('uuid') uuid: string,
+    ) {
+        return await this.userService.getUser({uuid});
+    }
+
+    @Post()
+    async updateUser(
+        @Body() body: {uuid:string , update: {name: string, email: string, bio: string}},
+    ) {
+        return await this.userService.updateUser(body.uuid, body.update);
+    }
 
 }

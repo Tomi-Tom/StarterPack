@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import {User} from "../../user/entities/user.entity";
 import {VerificationState} from "../../types/verification.state";
 

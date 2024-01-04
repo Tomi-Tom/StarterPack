@@ -23,6 +23,12 @@ export class User extends BaseEntity  {
     @Column({ type: 'timestamp'})
     created_at!: Date;
 
+    @OneToMany(() => Profile, (profile) => profile.owner_id, {cascade: true})
+    profiles!: Profile[];
+
+    @Column()
+    bio!: string;
+
     @Column({default: false})
     is_admin!: boolean;
 }
