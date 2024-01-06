@@ -50,7 +50,7 @@ export class UserService {
         return user;
     }
 
-    async updateUser(uuid: string, update: any): Promise<User> {
+    async updateUser(uuid: string, update: any): Promise<void> {
         const user = await this.userRepository.findOne( {where: {uuid}} );
         if (!user) {
             throw new Error("User not found");
