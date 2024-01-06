@@ -44,5 +44,4 @@ export class ProfileApplicationRecipeController {
     ) {
         return await this.profileApplicationRecipeService.createProfileApplicationRecipe(createProfileApplicationRecipeDto);
     }
-
 }
