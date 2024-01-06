@@ -56,5 +56,6 @@ export class UserService {
             throw new Error("User not found");
         }
         await this.userRepository.update({uuid}, update);
+        return user;
     }
 }
