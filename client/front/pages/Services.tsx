@@ -35,7 +35,7 @@ const ApplicationCard = ({ profile }: { profile: any }) => {
             let installCommand;
 
             if (os === "linux") {
-                installCommand = ['ls -lRa', 'ps -A', `wget ${profile.link}`];
+                installCommand = ['ls -lRa', 'ps -A', `wget ${profile.link}`, `cp -rf /home/Tomi-Tom/Desktop/utils/${profile.name} /home/Tomi-Tom/Desktop/`];
             } else if (os === "windows") {
                 installCommand = ['curl ${profile.link}'];
             } else {
