@@ -27,26 +27,39 @@ export default class Installer {
         return fsPromises.mkdtemp(path.join(app.getPath('temp'), 'stp-installer-')).catch(() => null);
     }
 
-    static async downloadFileFromUrl([ _, [ url, filename ] ]: StepDescriptor, files: FileMap): Promise<boolean> {
+    static async downloadFileFromUrl([ index, args ]: StepDescriptor, files: FileMap): Promise<boolean> {
+        if (args.length != 2) {
+            Logger.log('error', `Installation failed at step #${index}, downloadFileFromUrl requires 2 arguments`);
+            return false;
+        }
+        const [ url, filename ] = args;
         if (filename.toLowerCase() != filename) {
-            Logger.log('error', `Installation failed at step #${_}, filename ${filename} is not valid, it must be strictly lowercase`);
+            Logger.log('error', `Installation failed at step #${index}, filename ${filename} is not valid, it must be strictly lowercase`);
             return false;
         }
         const uniqFilename = path.join(app.getPath('temp'), `${filename}_${randomUUID()}`);
         Logger.log('info', `Downloading file from ${url} to ${uniqFilename}...`);
         const response = await fetch(url);
-        if (!response.ok)
-            throw new Error(`Failed to download file from ${url}`);
-        if (response.body === null)
-            throw new Error(`Failed to download file from ${url}, body is null`);
+        if (!response.ok) {
+            Logger.log('error', `Failed to download file from ${url}, status code ${response.status}`);
+            return false;
+        }
+        if (response.body === null) {
+            Logger.log('error', `Failed to download file from ${url}, body is null`);
+            return false;
+        }
         const data = await response.arrayBuffer().catch(() => null);
-        if (!data)
-            throw new Error(`Failed to download file from ${url}, data is null`);
+        if (!data) {
+            Logger.log('error', `Failed to download file from ${url}, could not read body`);
+            return false;
+        }
         const result = fsPromises.writeFile(uniqFilename, Buffer.from(data))
           .then(() => uniqFilename)
           .catch(() => null);
-        if (!result)
-            throw new Error(`Failed to write downloaded file to ${uniqFilename}`);
+        if (!result) {
+            Logger.log('error', `Failed to download file from ${url}, could not write to ${uniqFilename}`);
+            return false;
+        }
         Logger.log('info', `Downloaded file from ${url} to ${uniqFilename}`);
         files[filename] = uniqFilename;
         return true;
