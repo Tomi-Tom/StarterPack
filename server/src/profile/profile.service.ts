@@ -23,6 +23,7 @@ export class ProfileService {
                 owner_id: profile.owner_id,
                 verification_state: VerificationState.VERIFIED,
                 uuid: uuidv4(),
+                applications: [],
                 created_at: new Date(),
             }
             return await this.ProfileRepository.save(
