@@ -20,7 +20,7 @@ export class ApplicationService {
             const applicationToCreate = {
                 uuid: uuidv4(),
                 created_at: new Date(),
-                recipes: createApplication.recipes,
+                //applicationRecipes: createApplication.recipes,
                 name: createApplication.name,
                 creator_uuid: createApplication.creator_uuid,
                 verification_state: VerificationState.PENDING,
