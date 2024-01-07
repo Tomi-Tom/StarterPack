@@ -2,6 +2,7 @@ import {BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn}
 import {VerificationState} from "../../types/verification.state";
 import {ApplicationRecipe} from "../../application_recipe/entities/application_recipe.entity";
 import {User} from "../../user/entities/user.entity";
+import {ProfileApplicationRecipe} from "../../profile_application_recipe/entities/profile_application_recipe.entity";
 
 @Entity()
 export class Application extends BaseEntity {
@@ -15,6 +16,9 @@ export class Application extends BaseEntity {
     @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
     recipes!: string[];
 
+    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.application_uuid)
+    profile_application_recipes!: string[];
+
     @Column()
     name!: string;
 
@@ -23,5 +27,4 @@ export class Application extends BaseEntity {
 
     @Column({ type: 'timestamp'})
     created_at!: Date;
-
 }
