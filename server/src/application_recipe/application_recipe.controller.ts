@@ -27,32 +27,5 @@ export class ApplicationRecipeController {
         return await this.applicationRecipeService.create(createApplicationRecipeDto);
     }
 
-    @Get()
-    async getApplicationRecipes() {
-        return await this.applicationRecipeService.getApplicationRecipes();
-    }
-
-    @Get('getApplicationRecipe')
-    async getApplicationRecipe(
-        @Query('uuid') uuid: string,
-    ) {
-        return await this.applicationRecipeService.getApplicationRecipe(uuid);
-    }
-
-    @Post('updateApplicationRecipe')
-    async updateApplicationRecipe(
-        @Query('uuid') uuid: string,
-        @Body() updateApplicationRecipeDto: CreateApplicationRecipeDto,
-    ) {
-        return await this.applicationRecipeService.updateApplicationRecipe(uuid, updateApplicationRecipeDto);
-    }
-
-    @Delete()
-    async deleteApplicationRecipe(
-        @Query('uuid') uuid: string,
-    ) {
-        return await this.applicationRecipeService.deleteApplicationRecipe(uuid);
-    }
-
 
 }

@@ -10,12 +10,11 @@ export class Application extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     uuid!: string;
 
-
     @OneToOne(() => User, (user) => user.uuid)
     creator_uuid!: string | null;
 
-    @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
-    recipes!: string[];
+    @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application)
+    applicationRecipes!: ApplicationRecipe[];
 
     @ManyToMany(() => Profile , (profile) => profile.uuid)
     profiles!: Profile[];

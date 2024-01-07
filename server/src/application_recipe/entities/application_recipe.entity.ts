@@ -4,12 +4,10 @@ import {VerificationState} from "../../types/verification.state";
 
 @Entity()
 export class ApplicationRecipe extends BaseEntity{
+    @PrimaryGeneratedColumn('uuid')
     @ManyToOne(() => Application, (application) => application.uuid)
     @JoinColumn({name: 'application_uuid'})
-    application_uuid!: string;
-
-    @PrimaryGeneratedColumn('uuid')
-    uuid!: string;
+    application!: Application;
 
 
     @Column()

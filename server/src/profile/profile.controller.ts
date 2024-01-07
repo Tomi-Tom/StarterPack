@@ -11,38 +11,45 @@ export class ProfileController {
     ) {}
 
     @Post()
-    createProfile(
+    async createProfile(
         @Body('profile') profile: ProfileDto
     ) {
         console.log(profile);
-        return this.profileService.createProfile(profile);
+        return await this.profileService.createProfile(profile);
     }
 
     @Get('getProfiles')
-    getProfiles() {
-        return this.profileService.getProfiles();
+    async getProfiles() {
+        return await this.profileService.getProfiles();
     }
 
     @Get('getProfile')
-    getProfile(
+    async getProfile(
         @Query('uuid') uuid: string,
     ) {
-        return this.profileService.getProfile(uuid);
+        return await this.profileService.getProfile(uuid);
     }
 
     @Post('updateProfile')
-    updateProfile(
+    async updateProfile(
         @Body('uuid') uuid: string,
         @Body('profile') profile: ProfileDto
     ) {
-        return this.profileService.updateProfile(uuid, profile);
+        return await this.profileService.updateProfile(uuid, profile);
     }
 
     @Delete('deleteProfile')
-    deleteProfile(
+    async deleteProfile(
         @Query('uuid') uuid: string,
     ) {
-        return this.profileService.deleteProfile(uuid);
+        return await this.profileService.deleteProfile(uuid);
+    }
+
+    @Get('getInstallScripts')
+    async getInstallScripts(
+        @Query('uuid') uuid: string,
+    ) {
+        return await this.profileService.getInstallScripts(uuid);
     }
 
 }

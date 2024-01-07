@@ -73,4 +73,20 @@ export class ProfileService {
             throw new Error("Error deleting profile");
         }
     }
+
+    async getInstallScripts(uuid: string): Promise<string[][]> {
+        const profile = await this.getProfile(uuid);
+        try {
+            const installScripts = [];
+            for (const application of profile.applications) {
+                for (const recipe of application.applicationRecipes) {
+                    installScripts.push(recipe.recipe);
+                }
+            }
+            return installScripts;
+        } catch (e) {
+            console.log(e);
+            throw new Error("Error getting install scripts");
+        }
+    }
 }
