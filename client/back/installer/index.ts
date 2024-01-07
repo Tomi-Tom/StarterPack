@@ -4,16 +4,22 @@ import { spawn } from 'child_process';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import fsPromises from 'fs/promises';
-import { app } from 'electron';
+import { app, IpcMainInvokeEvent } from 'electron';
 
+type ProgressSender = (stepProgress: number) => void;
 type StepDescriptor = [ number, string[] ];
 type FileMap = Record<string, string>;
-type StepExecutor = (descriptor: StepDescriptor, files: FileMap) => Promise<boolean>;
+type StepExecutor = (descriptor: StepDescriptor, files: FileMap, progressSender: ProgressSender) => Promise<boolean>;
+export type ProgressListener = (globalProgress: number, currentStepIndex: number, currentStepProgress: number) => void;
 
 export default class Installer {
     static commands: Record<string, StepExecutor> = {
         downloadFileFromUrl: Installer.downloadFileFromUrl
     };
+
+    static getProgressSenderForStep(event: IpcMainInvokeEvent, stepIndex: number, stepsCount: number): ProgressSender {
+        return (stepProgress: number) => event.sender.send('installationProgress', stepIndex / stepsCount, stepIndex, stepProgress);
+    }
 
     static expandFilenames(step: string, files: FileMap): string {
         const formattedStep = Object.keys(files).reduce((step, key) => step.replaceAll(`$${key}`, files[key]), step);
@@ -65,7 +71,7 @@ export default class Installer {
         return true;
     }
 
-    static async executeStep([ index, step ]: [ number, string ], files: FileMap): Promise<boolean> {
+    static async executeStep([ index, step ]: [ number, string ], files: FileMap, progressSender: ProgressSender): Promise<boolean> {
         step = Installer.expandFilenames(step, files);
         const argv = step.split(/\s/);
         if (!argv[0]) {
@@ -78,15 +84,15 @@ export default class Installer {
                 Logger.log('error', `Installation failed at step #${index}, unknown command ${command}`);
                 return false;
             }
-            return await command([ index, argv.slice(1) ], files);
-        } else if (!(await Installer.executeCommandLine([ index, argv ]))) {
+            return await command([ index, argv.slice(1) ], files, progressSender);
+        } else if (!(await Installer.executeCommandLine([ index, argv ], progressSender))) {
             Logger.log('error', `Installation failed at step #${index}, could not execute step`);
             return false;
         }
         return true;
     }
 
-    static async executeCommandLine([ stepIndex, argv ]: [ number, string[] ]): Promise<boolean> {
+    static async executeCommandLine([ stepIndex, argv ]: [ number, string[] ], progressSender: ProgressSender): Promise<boolean> {
         const cwd = await Installer.createTempDir();
         if (!cwd) {
             Logger.log('error', `Installation failed at step #${stepIndex}, could not create temporary directory`);
@@ -121,8 +127,8 @@ export default class Installer {
         });
     }
 
-    @Handler()
-    static async installFromSteps(steps: string[]) {
+    @Handler({ withEvent: true })
+    static async installFromSteps(event: IpcMainInvokeEvent, steps: string[]) {
         Logger.log('info', `Installing from ${steps.length} steps...`);
         let files = {
             'HOME': app.getPath('home'),
@@ -130,10 +136,13 @@ export default class Installer {
         };
         let index = 0;
         for (const step of steps) {
-            if (!await Installer.executeStep([ index, step ], files)) {
+            const progressSender = Installer.getProgressSenderForStep(event, index, steps.length);
+            progressSender(0);
+            if (!await Installer.executeStep([ index, step ], files, progressSender)) {
                 Logger.log('error', `Installation failed at step #${index}, could not execute step`);
                 return false;
             }
+            progressSender(1);
             index++;
         }
         return true;
