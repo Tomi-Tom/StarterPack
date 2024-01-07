@@ -95,7 +95,7 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
             link: 'https://discord.com',
             image: DiscordLogo,
             installationCommands: {
-                linux: [ 'wget https://discord.com/api/download?platform=linux&format=deb -O discord.setup.deb', 'pkexec apt install ./discord.setup.deb' ],
+                linux: [ 'wget https://discord.com/api/download?platform=linux&format=deb -O discord.setup.deb', 'pkexec dpkg -i ./discord.setup.deb' ],
                 windows: [ 'wget https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86 -O discord.setup.exe', 'discord.setup.exe' ]
             }
         },
