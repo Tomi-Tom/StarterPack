@@ -1,8 +1,9 @@
-import {BaseEntity, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {VerificationState} from "../../types/verification.state";
 import {ApplicationRecipe} from "../../application_recipe/entities/application_recipe.entity";
 import {User} from "../../user/entities/user.entity";
 import {ProfileApplicationRecipe} from "../../profile_application_recipe/entities/profile_application_recipe.entity";
+import Profile from "../../profile/entities/profile.entity";
 
 @Entity()
 export class Application extends BaseEntity {
@@ -16,8 +17,8 @@ export class Application extends BaseEntity {
     @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
     recipes!: string[];
 
-    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.uuid)
-    profile_application_recipes!: string[];
+    @ManyToMany(() => Profile , (profile) => profile.uuid)
+    profiles!: Profile[];
 
     @Column()
     name!: string;

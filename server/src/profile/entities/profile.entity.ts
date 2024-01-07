@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {BaseEntity, Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "../../user/entities/user.entity";
 import {VerificationState} from "../../types/verification.state";
 import {Application} from "../../application/entities/application.entity";
@@ -15,8 +15,8 @@ export default class Profile {
     @Column()
     description!: string;
 
-    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.uuid)
-    profile_application_recipes!: string[];
+    @ManyToMany(() => Application, (application) => application.uuid)
+    applications!: Application[];
 
     @ManyToOne(() => User, (user) => user.uuid)
     owner_id!: string;
