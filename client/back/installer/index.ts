@@ -23,7 +23,7 @@ export default class Installer {
 
     static expandFilenames(step: string, files: FileMap): string {
         const formattedStep = Object.keys(files).reduce((step, key) => step.replaceAll(`$${key}`, files[key]), step);
-        const remainingKeys = formattedStep.match(/\$[a-zA-Z0-9]+/g);
+        const remainingKeys = formattedStep.match(/\$\S+/g);
         if (remainingKeys && remainingKeys.length > 0)
             Logger.log('warning', `Installation step "${step}" contains unexpanded keys: ${remainingKeys.join(', ')}`);
         return formattedStep;
@@ -43,7 +43,7 @@ export default class Installer {
             Logger.log('error', `Installation failed at step #${index}, filename ${filename} is not valid, it must be strictly lowercase`);
             return false;
         }
-        const uniqFilename = path.join(app.getPath('temp'), `${filename}_${randomUUID()}`);
+        const uniqFilename = path.join(app.getPath('temp'), `${randomUUID()}_${filename}`);
         Logger.log('info', `Downloading file from ${url} to ${uniqFilename}...`);
         const response = await fetch(url);
         if (!response.ok) {

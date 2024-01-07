@@ -15,7 +15,6 @@ const ApplicationCard = ({ profile }: { profile: Profile }) => {
     const theme = useTheme();
 
     const handleApplicationClick = async () => {
-
         try {
             const os = await window.electron.identifying.identify();
 
@@ -30,8 +29,8 @@ const ApplicationCard = ({ profile }: { profile: Profile }) => {
                   alert(`${profile.name} installation successful`);
               });
         } catch (error) {
-            console.error("Installation failed", error);
-            alert("Installation failed. Please try again later.");
+            console.error('Installation failed', error);
+            alert('Installation failed. Please try again later.');
         }
     };
 
@@ -95,8 +94,8 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
             link: 'https://discord.com',
             image: DiscordLogo,
             installationCommands: {
-                linux: [ 'wget https://discord.com/api/download?platform=linux&format=deb -O discord.setup.deb', 'pkexec dpkg -i ./discord.setup.deb' ],
-                windows: [ 'wget https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86 -O discord.setup.exe', 'discord.setup.exe' ]
+                linux: [ '!downloadFileFromUrl https://discord.com/api/download?platform=linux&format=deb setup', 'pkexec dpkg -i $setup' ],
+                windows: [ '!downloadFileFromUrl https://discord.com/api/download?platform=linux&format=deb setup.exe', '.\\$setup.exe' ]
             }
         },
         {
@@ -104,15 +103,15 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
             link: 'https://canary.discord.com',
             image: DiscordLogo,
             installationCommands: {
-                linux: [ 'wget https://canary.discord.com/api/download?platform=linux&format=deb -O discord.canary.setup.deb', 'pkexec dpkg -i /home/crooser/WebstormProjects/StarterPack/client/discord.canary.setup.deb' ],
-                windows: [ 'wget https://canary.discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86 -O discord.setup.exe', 'discord.setup.exe' ]
+                linux: [ '!downloadFileFromUrl https://canary.discord.com/api/download?platform=linux&format=deb setup', 'pkexec dpkg -i $setup' ],
+                windows: [ '!downloadFileFromUrl https://canary.discord.com/api/download?platform=linux&format=deb setup.exe', '.\\$setup.exe' ]
             }
         }
     ] as Profile[], []);
     const initialProfileList = useMemo(() => mock, []);
 
-    const [searchTerm, setSearchTerm] = useState<string>("");
-    const [profileList, setProfileList] = useState(initialProfileList);
+    const [ searchTerm, setSearchTerm ] = useState<string>('');
+    const [ profileList, setProfileList ] = useState(initialProfileList);
 
     const filterProfiles = (search: string) => {
         const filteredList = initialProfileList.filter(profile => profile.name.toLowerCase().includes(search.toLowerCase()));
@@ -125,41 +124,48 @@ const Services = ({ sidebarOpen }: ServicesProps) => {
     };
 
     return (
-        <div
+      <div
+        style={{
+            marginLeft: sidebarOpen ? '250px' : '80px',
+            padding: '20px',
+            minHeight: '100vh',
+            height: '100%',
+            textAlign: 'center',
+            background: theme.background,
+            color: theme.text
+        }}
+      >
+          <h1 style={{ textAlign: 'center' }}>Services</h1>
+
+          <input
+            type="text"
+            placeholder="Search profiles..."
+            value={searchTerm}
+            onChange={handleSearchChange}
             style={{
-                marginLeft: sidebarOpen ? '250px' : '80px',
-                padding: '20px',
-                minHeight: '100vh',
-                height: '100%',
-                textAlign: 'center',
-                background: theme.background,
-                color: theme.text,
+                width: '100%',
+                padding: '10px',
+                boxSizing: 'border-box',
+                marginBottom: '20px',
+                borderRadius: '5px',
+                background: theme.lightBackground
             }}
-        >
-            <h1 style={{ textAlign: 'center' }}>Services</h1>
+          />
 
-            <input
-                type="text"
-                placeholder="Search profiles..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                style={{
-                    width: '100%',
-                    padding: '10px',
-                    boxSizing: 'border-box',
-                    marginBottom: '20px',
-                    borderRadius: '5px',
-                    background: theme.lightBackground,
-                }}
-            />
-
-            {/* Utilisation d'une hauteur fixe pour la zone des ApplicationCard */}
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', overflowY: 'auto', height: 'calc(100vh - 160px)'}}>
-                {profileList.map((profile, index) => (
-                    <ApplicationCard key={index} profile={profile} />
-                ))}
-            </div>
-        </div>
+          {/* Utilisation d'une hauteur fixe pour la zone des ApplicationCard */}
+          <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              flexWrap: 'wrap',
+              overflowY: 'auto',
+              height: 'calc(100vh - 160px)'
+          }}>
+              {profileList.map((profile, index) => (
+                <ApplicationCard key={index} profile={profile} />
+              ))}
+          </div>
+      </div>
     );
 };
 
