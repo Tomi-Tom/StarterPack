@@ -16,7 +16,7 @@ export class Application extends BaseEntity {
     @OneToMany(() => ApplicationRecipe, (Recipes) => Recipes.application_uuid)
     recipes!: string[];
 
-    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.application_uuid)
+    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.uuid)
     profile_application_recipes!: string[];
 
     @Column()

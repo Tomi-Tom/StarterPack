@@ -15,7 +15,7 @@ export default class Profile {
     @Column()
     description!: string;
 
-    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.profile_uuid)
+    @OneToMany(() => ProfileApplicationRecipe, (profileApplicationRecipe) => profileApplicationRecipe.uuid)
     profile_application_recipes!: string[];
 
     @ManyToOne(() => User, (user) => user.uuid)
